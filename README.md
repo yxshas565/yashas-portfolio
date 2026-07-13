@@ -1,6 +1,6 @@
 # Yashas Sadananda — Portfolio
 
-🔗 **Live site:** [yxshas565.github.io/yashas-portfolio](https://yxshas565.github.io/yashas-portfolio/)
+🔗 **Live site:** <a href="https://yxshas565.github.io/yashas-portfolio/" target="_blank" rel="noopener noreferrer">yxshas565.github.io/yashas-portfolio</a>
 
 Personal portfolio site for Yashas Sadananda — AI Safety & Systems Engineer, B.Tech CSE student at PES University, Bengaluru, and founder-track builder at PESU Venture Labs.
 
