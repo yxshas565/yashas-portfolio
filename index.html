@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Yashas Sadananda · AI Safety & Systems Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#050607; --surface:#0a0d0f; --surface2:#0e1214;
+  --border:#1a2620; --border-hi:#25352c;
+  --acid:#c8ff3d; --acid-dim:#8fb82c; --acid-glow:rgba(200,255,61,0.14);
+  --amber:#ff8c3d;
+  --text:#dfe8e0; --text-dim:#6f8478; --text-mute:#3a4a40;
+  --mono:'JetBrains Mono',monospace; --disp:'Space Grotesk',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:var(--disp);overflow-x:hidden;}
+::selection{background:var(--acid);color:#000;}
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--border-hi);}
+
+.noise{position:fixed;inset:0;z-index:9995;pointer-events:none;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+.grid-bg{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(rgba(200,255,61,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(200,255,61,0.03) 1px,transparent 1px);
+  background-size:48px 48px;mask-image:radial-gradient(ellipse 80% 60% at 50% 20%,black 40%,transparent 90%);}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;
+  padding:22px 56px;background:rgba(5,6,7,0.85);backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:border-color .3s;}
+nav.scrolled{border-bottom-color:var(--border);}
+.nav-logo{font-family:var(--mono);font-size:14px;color:var(--acid);letter-spacing:.1em;text-decoration:none;font-weight:700;}
+.nav-logo span{color:var(--text-mute);}
+.nav-links{display:flex;gap:30px;list-style:none;align-items:center;}
+.nav-links a{font-family:var(--mono);font-size:11px;color:var(--text-dim);text-decoration:none;letter-spacing:.14em;text-transform:uppercase;transition:color .2s;}
+.nav-links a:hover{color:var(--acid);}
+.nav-resume{font-family:var(--mono);font-size:11px;color:var(--bg);background:var(--acid);padding:8px 16px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;font-weight:700;}
+.nav-resume:hover{background:#fff;}
+@media(max-width:900px){.nav-links a:not(.nav-resume){display:none;}}
+
+section,#hero{position:relative;z-index:1;padding:120px 56px;}
+@media(max-width:768px){section,#hero{padding:100px 24px;}}
+
+#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding-top:140px;}
+.hero-glow{position:absolute;top:-100px;right:-150px;width:600px;height:600px;
+  background:radial-gradient(circle,rgba(200,255,61,0.08) 0%,transparent 70%);pointer-events:none;filter:blur(20px);}
+.hero-eyebrow{font-family:var(--mono);font-size:12px;color:var(--acid);letter-spacing:.25em;text-transform:uppercase;margin-bottom:22px;
+  display:flex;align-items:center;gap:10px;opacity:0;animation:fadeUp .6s .1s forwards;}
+.hero-eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--acid);box-shadow:0 0 10px var(--acid);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.25;}}
+.hero-name{font-family:var(--disp);font-size:clamp(46px,7.5vw,104px);font-weight:700;line-height:.94;letter-spacing:-.03em;color:#fff;
+  opacity:0;animation:fadeUp .7s .2s forwards;}
+.hero-name .last{color:var(--acid);}
+.hero-role{font-family:var(--mono);font-size:clamp(14px,1.6vw,18px);color:var(--text-dim);margin-top:22px;letter-spacing:.02em;max-width:640px;line-height:1.6;
+  opacity:0;animation:fadeUp .6s .35s forwards;}
+.hero-role b{color:var(--text);font-weight:500;}
+.hero-desc{font-size:15.5px;color:var(--text-dim);margin-top:18px;max-width:560px;line-height:1.8;
+  opacity:0;animation:fadeUp .6s .5s forwards;}
+.hero-cta{display:flex;gap:14px;margin-top:38px;flex-wrap:wrap;opacity:0;animation:fadeUp .6s .65s forwards;}
+.btn{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;padding:14px 26px;font-weight:600;transition:all .2s;display:inline-flex;align-items:center;gap:8px;}
+.btn-primary{background:var(--acid);color:#000;border:1px solid var(--acid);}
+.btn-primary:hover{box-shadow:0 0 24px var(--acid-glow);transform:translateY(-2px);}
+.btn-ghost{color:var(--text);border:1px solid var(--border-hi);background:transparent;}
+.btn-ghost:hover{border-color:var(--acid);color:var(--acid);transform:translateY(-2px);}
+.hero-meta{display:flex;gap:36px;margin-top:56px;flex-wrap:wrap;opacity:0;animation:fadeUp .6s .8s forwards;}
+.hero-meta-item{font-family:var(--mono);}
+.hero-meta-num{font-size:26px;color:var(--acid);font-weight:700;line-height:1;}
+.hero-meta-label{font-size:10px;color:var(--text-mute);letter-spacing:.12em;text-transform:uppercase;margin-top:6px;}
+
+.section-tag{font-family:var(--mono);font-size:11px;color:var(--acid);letter-spacing:.28em;text-transform:uppercase;margin-bottom:14px;}
+.section-tag::before{content:'0'attr(data-n)' — ';color:var(--text-mute);}
+.section-title{font-family:var(--disp);font-size:clamp(30px,4vw,50px);font-weight:700;color:#fff;line-height:1.05;margin-bottom:20px;letter-spacing:-.01em;}
+.section-title .hi{color:var(--acid);}
+.section-sub{font-size:15px;color:var(--text-dim);max-width:640px;line-height:1.75;margin-bottom:56px;}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:64px;}
+@media(max-width:900px){.about-grid{grid-template-columns:1fr;}}
+.about-text p{font-size:16px;line-height:1.9;color:var(--text-dim);margin-bottom:18px;}
+.about-text b{color:var(--text);font-weight:500;}
+.about-text .highlight{color:var(--acid);font-weight:500;}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);}
+.stat-box{background:var(--surface);padding:26px 22px;}
+.stat-box .n{font-family:var(--mono);font-size:32px;color:var(--acid);font-weight:700;}
+.stat-box .l{font-size:11px;color:var(--text-dim);margin-top:6px;letter-spacing:.03em;}
+
+/* FLAGSHIP */
+#flagship{background:linear-gradient(180deg,transparent,rgba(200,255,61,0.025),transparent);}
+.flagship-card{border:1px solid var(--border-hi);background:var(--surface);position:relative;overflow:hidden;padding:52px;}
+.flagship-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:2px;background:linear-gradient(90deg,var(--acid),transparent 60%);}
+.flag-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px;margin-bottom:24px;}
+.flag-badge{font-family:var(--mono);font-size:10px;color:#000;background:var(--acid);padding:5px 12px;letter-spacing:.14em;font-weight:700;}
+.flag-status{font-family:var(--mono);font-size:11px;color:var(--text-dim);letter-spacing:.08em;}
+.flag-title{font-family:var(--disp);font-size:clamp(26px,3.4vw,40px);font-weight:700;color:#fff;margin-bottom:16px;}
+.flag-desc{font-size:15.5px;line-height:1.85;color:var(--text-dim);max-width:780px;margin-bottom:28px;}
+.flag-desc b{color:var(--text);}
+.flag-points{display:grid;grid-template-columns:1fr 1fr;gap:14px 28px;margin-bottom:32px;}
+@media(max-width:700px){.flag-points{grid-template-columns:1fr;}}
+.flag-point{font-size:13.5px;color:var(--text-dim);line-height:1.6;padding-left:18px;position:relative;}
+.flag-point::before{content:'▸';position:absolute;left:0;color:var(--acid);}
+.flag-stack{display:flex;flex-wrap:wrap;gap:8px;}
+.flag-tag{font-family:var(--mono);font-size:11px;color:var(--acid-dim);border:1px solid rgba(200,255,61,0.25);padding:5px 12px;letter-spacing:.05em;}
+
+/* PROJECTS */
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);}
+.project-card{background:var(--surface);padding:34px;position:relative;transition:background .25s;text-decoration:none;display:block;color:inherit;}
+.project-card:hover{background:var(--surface2);}
+.project-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;}
+.project-tag{font-family:var(--mono);font-size:10px;color:var(--acid);letter-spacing:.16em;text-transform:uppercase;display:flex;align-items:center;gap:8px;}
+.project-tag::before{content:'';width:16px;height:1px;background:var(--acid-dim);}
+.project-badge{font-family:var(--mono);font-size:9px;color:var(--amber);border:1px solid rgba(255,140,61,0.35);padding:3px 8px;letter-spacing:.1em;}
+.project-name{font-family:var(--disp);font-size:19px;font-weight:700;color:#fff;line-height:1.25;margin-bottom:10px;}
+.project-desc{font-size:13.5px;color:var(--text-dim);line-height:1.7;margin-bottom:16px;}
+.project-metric{font-family:var(--mono);font-size:11.5px;color:var(--acid-dim);margin-bottom:16px;}
+.project-stack{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px;}
+.stack-tag{font-family:var(--mono);font-size:10px;color:var(--text-dim);border:1px solid var(--border-hi);padding:3px 9px;}
+.project-link{font-family:var(--mono);font-size:11px;color:var(--text);letter-spacing:.08em;display:inline-flex;align-items:center;gap:6px;}
+.project-link::after{content:'↗';color:var(--acid);}
+
+/* TIMELINE */
+.timeline{position:relative;padding-left:32px;border-left:1px solid var(--border-hi);}
+.tl-item{position:relative;padding-bottom:34px;}
+.tl-item:last-child{padding-bottom:0;}
+.tl-item::before{content:'';position:absolute;left:-37px;top:4px;width:10px;height:10px;border-radius:50%;background:var(--bg);border:2px solid var(--acid);}
+.tl-date{font-family:var(--mono);font-size:11px;color:var(--acid-dim);letter-spacing:.1em;margin-bottom:6px;}
+.tl-title{font-family:var(--disp);font-size:16px;font-weight:600;color:#fff;margin-bottom:4px;}
+.tl-desc{font-size:13px;color:var(--text-dim);line-height:1.65;max-width:600px;}
+
+/* SKILLS */
+.skills-container{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);}
+.skill-group{background:var(--surface);padding:26px;}
+.skill-group-label{font-family:var(--mono);font-size:10px;color:var(--acid);letter-spacing:.2em;text-transform:uppercase;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border);}
+.skill-items{display:flex;flex-wrap:wrap;gap:7px;}
+.skill-pill{font-family:var(--mono);font-size:11px;color:var(--text-dim);background:rgba(200,255,61,0.03);border:1px solid var(--border-hi);padding:5px 11px;transition:all .2s;}
+.skill-pill:hover{color:var(--acid);border-color:var(--acid);background:var(--acid-glow);}
+
+/* CERTS */
+.certs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);}
+.cert-card{background:var(--surface);padding:22px 26px;display:flex;gap:14px;align-items:flex-start;}
+.cert-icon{font-family:var(--mono);color:var(--acid);font-size:16px;min-width:22px;}
+.cert-name{font-size:13.5px;font-weight:500;color:#fff;line-height:1.4;margin-bottom:4px;}
+.cert-issuer{font-family:var(--mono);font-size:10px;color:var(--text-dim);letter-spacing:.08em;}
+
+/* RESEARCH */
+#research .research-box{border:1px solid var(--border-hi);background:var(--surface);padding:44px;}
+.research-line{font-size:15px;color:var(--text-dim);line-height:1.9;margin-bottom:16px;}
+.research-line:last-child{margin-bottom:0;}
+.research-line b{color:var(--acid-dim);font-weight:500;}
+
+/* CONTACT */
+#contact{text-align:center;}
+.contact-inner{max-width:640px;margin:0 auto;}
+#contact p{font-size:16px;color:var(--text-dim);line-height:1.85;margin-bottom:36px;}
+.contact-email{font-family:var(--mono);font-size:clamp(20px,3vw,30px);color:var(--acid);letter-spacing:.02em;margin-bottom:32px;display:inline-block;text-decoration:none;font-weight:700;}
+.contact-email:hover{text-shadow:0 0 24px var(--acid-glow);}
+.contact-links{display:flex;justify-content:center;flex-wrap:wrap;gap:14px;}
+.contact-link{font-family:var(--mono);font-size:12px;letter-spacing:.1em;color:var(--text-dim);text-decoration:none;border:1px solid var(--border-hi);padding:12px 22px;transition:all .2s;}
+.contact-link:hover{color:var(--acid);border-color:var(--acid);background:var(--acid-glow);}
+
+footer{border-top:1px solid var(--border);padding:26px 56px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;position:relative;z-index:1;}
+footer p,.footer-right{font-family:var(--mono);font-size:10px;color:var(--text-mute);letter-spacing:.08em;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .6s,transform .6s;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.blink{animation:blink 1s step-end infinite;}
+@keyframes blink{50%{opacity:0;}}
+</style>
+</head>
+<body>
+
+<div class="noise"></div>
+<div class="grid-bg"></div>
+
+<nav id="nav">
+  <a href="#hero" class="nav-logo">YS<span>.dev</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#flagship">EdgeDaemon</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#research">Research</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <a href="Yashas_Sadananda_Resume_SWE_Intern_1.pdf" class="nav-resume" target="_blank">Resume ↓</a>
+  </ul>
+</nav>
+
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-eyebrow"><span class="dot"></span>AVAILABLE FOR INTERNSHIPS · BENGALURU, INDIA<span class="blink">_</span></div>
+  <h1 class="hero-name">Yashas<br/><span class="last">Sadananda</span></h1>
+  <p class="hero-role">B.Tech CSE @ <b>PES University</b> · Founder-track builder @ <b>PESU Venture Labs</b> · building <b>traceable, auditable AI systems</b> for regulated industries.</p>
+  <p class="hero-desc">I build AI systems that can explain themselves. Currently founding EdgeDaemon — an AI decision-reconstruction and provenance platform — while shipping agentic pipelines, ML research systems, and safety-stack architectures across 10+ hackathons and research programs.</p>
+  <div class="hero-cta">
+    <a href="#flagship" class="btn btn-primary">See EdgeDaemon →</a>
+    <a href="#projects" class="btn btn-ghost">All Projects</a>
+    <a href="https://github.com/yxshas565" target="_blank" class="btn btn-ghost">GitHub ↗</a>
+  </div>
+  <div class="hero-meta">
+    <div class="hero-meta-item"><div class="n">10+</div><div class="hero-meta-label">Hackathons / Programs</div></div>
+    <div class="hero-meta-item"><div class="n">52K+</div><div class="hero-meta-label">Devs outranked (OpenEnv)</div></div>
+    <div class="hero-meta-item"><div class="n">1</div><div class="hero-meta-label">Founder-track startup</div></div>
+    <div class="hero-meta-item"><div class="n">100+</div><div class="hero-meta-label">LeetCode solved</div></div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="section-tag" data-n="1">about</div>
+  <h2 class="section-title">Who I <span class="hi">Am</span></h2>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p>I'm a Computer Science Engineering student at PES University, Bengaluru, working at the intersection of <b>AI safety, agentic systems, and full-stack engineering</b>. Most of my work centers on one question: <span class="highlight">can an AI system explain, after the fact, exactly why it did what it did?</span></p>
+      <p>That question became <b>EdgeDaemon</b>, an AI decision-reconstruction and provenance platform for regulated industries, which I'm building as a Technology Associate through PESU Venture Labs' competitive founder-track ABC program.</p>
+      <p>Outside EdgeDaemon, I've shipped five-agent trading safety stacks, RL-based ML pipeline agents, legal-defense multi-agent systems, and a ResNet18-based crop disease classifier with full inference provenance — across GitLab, Meta × PyTorch, IEEE, and FantomCode hackathons. I'm also a <b>national-level Ice & Inline Hockey athlete</b> representing Karnataka, which is where I actually learned how to perform under pressure as part of a team.</p>
+    </div>
+    <div class="stat-grid reveal">
+      <div class="stat-box"><div class="n">10+</div><div class="l">Projects & Research Systems</div></div>
+      <div class="stat-box"><div class="n">6+</div><div class="l">Certifications</div></div>
+      <div class="stat-box"><div class="n">8</div><div class="l">Hackathon Finals / Shortlists</div></div>
+      <div class="stat-box"><div class="n">7.32</div><div class="l">GPA · PES University</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="flagship">
+  <div class="section-tag" data-n="2">flagship venture</div>
+  <h2 class="section-title">Building <span class="hi">EdgeDaemon</span></h2>
+  <p class="section-sub">The centerpiece of my current work — an AI decision-reconstruction and provenance platform tackling one of the hardest unsolved problems in enterprise AI: making autonomous decisions auditable after the fact.</p>
+
+  <div class="flagship-card reveal">
+    <div class="flag-top">
+      <span class="flag-badge">PESU VENTURE LABS · ABC 2026</span>
+      <span class="flag-status">MAY 2026 — PRESENT</span>
+    </div>
+    <div class="flag-title">EdgeDaemon</div>
+    <p class="flag-desc">An <b>AI decision-reconstruction and provenance platform</b> for regulated industries — healthcare, legal, and finance — where every model decision needs to be explainable, traceable, and defensible after the fact. Selected for PESU Venture Labs' <b>Accelerating Bold Concepts</b> program, a competitive founder-track incubation cohort, and pivoted the technical thesis from on-device continual AI personalization to decision-provenance after structured customer discovery surfaced systemic traceability failures across enterprise AI pipelines.</p>
+    <div class="flag-points">
+      <div class="flag-point">Architected the <b>Retain Score</b> — a proprietary compliance-grade benchmark quantifying catastrophic forgetting and model drift, positioning EdgeDaemon in a structurally underserved market quadrant</div>
+      <div class="flag-point">Validated through AML analyst stakeholder mapping, vendor landscape analysis, and forensic case studies (TD Bank's $3B AML enforcement, Dutch Benefits Scandal)</div>
+      <div class="flag-point">Produced regulatory landscape mapping across GDPR, SOC 2, and MAS TRM frameworks to anchor the beachhead market thesis</div>
+      <div class="flag-point">Built investor-facing pitch materials, Miro stakeholder ecosystem maps, and a full go-to-market strategy for cohort review</div>
+      <div class="flag-point">Led full-stack prototyping across React, FastAPI/Node.js, and LLM-powered agentic pipelines</div>
+      <div class="flag-point">Featured as centerpiece across AI safety fellowship applications, including Singapore AI Safety Fellowship</div>
+    </div>
+    <div class="flag-stack">
+      <span class="flag-tag">React</span><span class="flag-tag">FastAPI</span><span class="flag-tag">Node.js</span>
+      <span class="flag-tag">LLM Agents</span><span class="flag-tag">Provenance Systems</span><span class="flag-tag">Regulatory Design</span>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="section-tag" data-n="3">projects</div>
+  <h2 class="section-title">Research & <span class="hi">Builds</span></h2>
+  <p class="section-sub">Every project here is built around the same throughline — making agentic AI systems observable, constrained, and auditable, not black boxes.</p>
+
+  <div class="projects-grid">
+
+    <a href="https://github.com/yxshas565" target="_blank" class="project-card reveal">
+      <div class="project-top"><span class="project-tag">Fintech · Agentic AI</span><span class="project-badge">TEAM LEAD</span></div>
+      <div class="project-name">AutoTrade AI</div>
+      <div class="project-desc">Six-layer agentic trading architecture with a 30s perceive-reason-decide-execute-self-correct loop and multi-broker integration (Zerodha, Upstox, Angel One). Led Team SynapseX for IEEE YESIST12 2026.</div>
+      <div class="project-metric">▸ 5-layer safety stack: confidence gating, hard constraints, circuit breakers, 2FA consent, immutable audit trail</div>
+      <div class="project-stack"><span class="stack-tag">Python</span><span class="stack-tag">FastAPI</span><span class="stack-tag">XGBoost</span><span class="stack-tag">LSTM</span><span class="stack-tag">Kafka</span><span class="stack-tag">Redis</span></div>
+      <span class="project-link">View on GitHub</span>
+    </a>
+
+    <a href="https://github.com/yxshas565" target="_blank" class="project-card reveal">
+      <div class="project-top"><span class="project-tag">Multi-Agent · Legal AI</span><span class="project-badge">R2 FINALIST</span></div>
+      <div class="project-name">Jurify</div>
+      <div class="project-desc">Multi-agent legal research and defense pipeline with citation-traced reasoning chains — every argument is traceable back to source documents. FantomCode 2026, Round 2 Finalist.</div>
+      <div class="project-metric">▸ On-device confidentiality isolation with selective memory purging for privileged documents</div>
+      <div class="project-stack"><span class="stack-tag">LangGraph</span><span class="stack-tag">Claude API</span><span class="stack-tag">FastAPI</span></div>
+      <span class="project-link">View on GitHub</span>
+    </a>
+
+    <a href="https://github.com/yxshas565" target="_blank" class="project-card reveal">
+      <div class="project-top"><span class="project-tag">MLOps · Agentic Pipelines</span><span class="project-badge">GITLAB AI</span></div>
+      <div class="project-name">ML Pipeline Orchestration Agent</div>
+      <div class="project-desc">5-agent autonomous ML pipeline (Trigger → Dataset Analyst → Strategist → Code Generator → Reporter) with zero manual intervention. Typed LangGraph state graphs with structured JSON observability.</div>
+      <div class="project-metric">▸ F1 = 0.7616 · ROC-AUC = 0.8454 · 131 automated tests passing</div>
+      <div class="project-stack"><span class="stack-tag">LangGraph</span><span class="stack-tag">Claude Sonnet</span><span class="stack-tag">Docker</span><span class="stack-tag">GitLab CI/CD</span></div>
+      <span class="project-link">View on GitHub</span>
+    </a>
+
+    <a href="https://github.com/yxshas565" target="_blank" class="project-card reveal">
+      <div class="project-top"><span class="project-tag">Reinforcement Learning</span><span class="project-badge">TOP SHORTLIST</span></div>
+      <div class="project-name">ML Pipeline Agent — OpenEnv</div>
+      <div class="project-desc">RL-based pipeline agent (preprocessing, model selection, hyperparameter optimization) using Q-learning with epsilon-greedy exploration. Meta × PyTorch Hackathon.</div>
+      <div class="project-metric">▸ Shortlisted from 52,000+ developers to the offline finale</div>
+      <div class="project-stack"><span class="stack-tag">Q-Learning</span><span class="stack-tag">Pydantic</span><span class="stack-tag">Docker</span><span class="stack-tag">HuggingFace</span></div>
+      <span class="project-link">View on GitHub</span>
+    </a>
+
+    <a href="https://github.com/yxshas565/milletdatanet" target="_blank" class="project-card reveal">
+      <div class="project-top"><span class="project-tag">ML Research · Provenance</span><span class="project-badge">FEATURED</span></div>
+      <div class="project-name">MilletDataNet</div>
+      <div class="project-desc">End-to-end ML research system for millet leaf disease classification — fine-tuned ResNet18 with k-fold cross-validation, class rebalancing, and a full inference provenance service.</div>
+      <div class="project-metric">▸ Macro-F1: 0.9196 · FastAPI provenance layer · React dashboard · simulated MQTT IoT layer</div>
+      <div class="project-stack"><span class="stack-tag">PyTorch</span><span class="stack-tag">ResNet18</span><span class="stack-tag">FastAPI</span><span class="stack-tag">React</span><span class="stack-tag">MQTT</span></div>
+      <span class="project-link">View on GitHub</span>
+    </a>
+
+    <a href="https://github.com/yxshas565" target="_blank" class="project-card reveal">
+      <div class="project-top"><span class="project-tag">Cognee · Memory Systems</span><span class="project-badge">PR MERGED</span></div>
+      <div class="project-name">AuditMind</div>
+      <div class="project-desc">Forensic audit system reconstructing complete decision histories for regulated-industry AI. Uses Cognee's hybrid graph-vector memory to capture every reasoning step across multi-turn agent workflows.</div>
+      <div class="project-metric">▸ Tamper-evident provenance chains · submitted PR to topoteretes/cognee</div>
+      <div class="project-stack"><span class="stack-tag">Cognee</span><span class="stack-tag">LangGraph</span><span class="stack-tag">FastAPI</span><span class="stack-tag">D3.js</span></div>
+      <span class="project-link">View on GitHub</span>
+    </a>
+
+    <a href="https://github.com/yxshas565/AssetFlow-YashasSadananda-EdgeDaemon" target="_blank" class="project-card reveal">
+      <div class="project-top"><span class="project-tag">Full Stack · Enterprise</span><span class="project-badge">SOLO BUILD</span></div>
+      <div class="project-name">AssetFlow</div>
+      <div class="project-desc">Enterprise Asset & Resource Management System built solo for the Odoo Hackathon 2026 virtual round — full auth, migrations, and containerized deployment from scratch.</div>
+      <div class="project-metric">▸ FastAPI + PostgreSQL 16 + SQLAlchemy 2.0 + Alembic + React/Vite + Docker Compose</div>
+      <div class="project-stack"><span class="stack-tag">FastAPI</span><span class="stack-tag">PostgreSQL</span><span class="stack-tag">React/Vite</span><span class="stack-tag">Docker</span><span class="stack-tag">JWT</span></div>
+      <span class="project-link">View on GitHub</span>
+    </a>
+
+    <a href="https://github.com/yxshas565" target="_blank" class="project-card reveal">
+      <div class="project-top"><span class="project-tag">Fraud Detection · Graph AI</span><span class="project-badge">HACKATHON</span></div>
+      <div class="project-name">SENTINEL</div>
+      <div class="project-desc">Graph-based agentic fraud detection system built for the iDEA 2.0 / Union Bank hackathon, modeling transaction networks to surface anomalous behavior.</div>
+      <div class="project-stack"><span class="stack-tag">Python</span><span class="stack-tag">Graph ML</span><span class="stack-tag">Agentic AI</span></div>
+      <span class="project-link">View on GitHub</span>
+    </a>
+
+    <a href="https://github.com/yxshas565" target="_blank" class="project-card reveal">
+      <div class="project-top"><span class="project-tag">TypeScript · Research Agents</span><span class="project-badge">MOST STARRED</span></div>
+      <div class="project-name">NEXUS</div>
+      <div class="project-desc">Multi-agent research orchestration engine with streaming execution, adaptive semantic memory, and a parallel web search → analysis → structured report pipeline.</div>
+      <div class="project-metric">▸ Explicit memory lifecycle controls — what's stored, retrieved, and forgotten is policy-governed, not implicit</div>
+      <div class="project-stack"><span class="stack-tag">TypeScript</span><span class="stack-tag">LangChain</span><span class="stack-tag">OpenAI API</span></div>
+      <span class="project-link">View on GitHub</span>
+    </a>
+
+    <a href="https://github.com/yxshas565" target="_blank" class="project-card reveal">
+      <div class="project-top"><span class="project-tag">FastAPI · LangGraph</span><span class="project-badge">PM ACCELERATOR</span></div>
+      <div class="project-name">Weather Risk Assistant</div>
+      <div class="project-desc">FastAPI + LangGraph + React weather risk assistant deployed on Vercel, paired with a GradientBoosting per-location forecasting pipeline and SHAP explainability layer.</div>
+      <div class="project-stack"><span class="stack-tag">LangGraph</span><span class="stack-tag">GradientBoosting</span><span class="stack-tag">SHAP</span><span class="stack-tag">Streamlit</span></div>
+      <span class="project-link">View on GitHub</span>
+    </a>
+
+  </div>
+</section>
+
+<section id="research">
+  <div class="section-tag" data-n="4">research direction</div>
+  <h2 class="section-title">Deep Neural Safety & <span class="hi">Interpretability</span></h2>
+  <div class="research-box reveal">
+    <p class="research-line">Actively researching how language models <b>internally</b> generate responses — moving below the behavioral surface to understand the exact mechanisms: how specific attention heads, MLP layers, and activation circuits produce particular outputs, and what structures correspond to reasoning, memory, and decision-making.</p>
+    <p class="research-line">Motivated by observed alignment failures — autonomous agents developing <b>emergent covert communication</b> between sub-agents, taking untracked actions, and exhibiting goal-directed behavior that bypasses intended constraints. Behavioral-interface safety alone isn't enough.</p>
+    <p class="research-line">Goal: develop formal <b>traceback methods</b> for AI decisions at the weight/activation level — extracting a precise, mechanistic account of why a model produced a specific output, enabling proactive safety guarantees instead of post-hoc behavioral observation.</p>
+    <p class="research-line">Building toward a graduate research thesis on low-level neural safety infrastructure — interpretability tooling, activation auditing, and formal provenance systems operating at the model-internals layer, not just the output layer.</p>
+  </div>
+
+  <div style="margin-top:64px;">
+    <div class="section-tag" data-n="5">trajectory</div>
+    <div class="timeline reveal">
+      <div class="tl-item">
+        <div class="tl-date">MAY 2026 — PRESENT</div>
+        <div class="tl-title">Technology Associate Intern, PESU Venture Labs (ABC Program)</div>
+        <div class="tl-desc">Founder-track incubation cohort. Building EdgeDaemon end-to-end — thesis, GTM, and product.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">JUN 2026</div>
+        <div class="tl-title">AuditMind — WeMakeDevs × Cognee Hackathon</div>
+        <div class="tl-desc">Built a traceable decision-trail reconstructor; PR submitted to the Cognee open-source repo.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">APR – MAY 2026</div>
+        <div class="tl-title">ML Pipeline Agent — Meta × PyTorch OpenEnv Hackathon</div>
+        <div class="tl-desc">Shortlisted to the offline finale from 52,000+ developers worldwide.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">APR 2026</div>
+        <div class="tl-title">AutoTrade AI — IEEE YESIST12 & Jurify — FantomCode Round 2</div>
+        <div class="tl-desc">Led a 6-layer trading safety architecture; built a multi-agent legal defense pipeline as a Round 2 Finalist.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">MAR 2026</div>
+        <div class="tl-title">ML Pipeline Orchestration Agent — GitLab AI Hackathon</div>
+        <div class="tl-desc">5-agent autonomous pipeline, F1 = 0.7616, fully observable via typed LangGraph state.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">JAN 2026</div>
+        <div class="tl-title">NEXUS — Personal Research Project</div>
+        <div class="tl-desc">Multi-agent research orchestration engine; became the most-starred repo on my GitHub.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">EARLY 2026</div>
+        <div class="tl-title">Began AI/ML journey</div>
+        <div class="tl-desc">Transitioned from full-stack/MERN development into serious AI and agentic systems work.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="section-tag" data-n="6">skills</div>
+  <h2 class="section-title">Tech <span class="hi">Stack</span></h2>
+  <div class="skills-container">
+    <div class="skill-group reveal">
+      <div class="skill-group-label">AI / Safety Research</div>
+      <div class="skill-items">
+        <span class="skill-pill">LangGraph</span><span class="skill-pill">LangChain</span><span class="skill-pill">Claude API</span>
+        <span class="skill-pill">OpenAI API</span><span class="skill-pill">RAG</span><span class="skill-pill">Agentic AI</span>
+        <span class="skill-pill">LoRA/QLoRA</span><span class="skill-pill">DPO</span><span class="skill-pill">Continual Learning</span>
+        <span class="skill-pill">Audit Trail Design</span><span class="skill-pill">Mech. Interp. (foundational)</span>
+      </div>
+    </div>
+    <div class="skill-group reveal">
+      <div class="skill-group-label">ML / Modeling</div>
+      <div class="skill-items">
+        <span class="skill-pill">PyTorch</span><span class="skill-pill">XGBoost</span><span class="skill-pill">LSTM</span>
+        <span class="skill-pill">Q-Learning</span><span class="skill-pill">ResNet18</span><span class="skill-pill">SHAP</span>
+      </div>
+    </div>
+    <div class="skill-group reveal">
+      <div class="skill-group-label">Languages</div>
+      <div class="skill-items">
+        <span class="skill-pill">Python</span><span class="skill-pill">TypeScript</span><span class="skill-pill">JavaScript</span>
+        <span class="skill-pill">C++</span><span class="skill-pill">C</span><span class="skill-pill">Java</span><span class="skill-pill">SQL</span>
+      </div>
+    </div>
+    <div class="skill-group reveal">
+      <div class="skill-group-label">Full-Stack & Infra</div>
+      <div class="skill-items">
+        <span class="skill-pill">React</span><span class="skill-pill">Next.js</span><span class="skill-pill">FastAPI</span>
+        <span class="skill-pill">Node.js</span><span class="skill-pill">Tailwind</span><span class="skill-pill">Docker</span>
+        <span class="skill-pill">GitLab CI/CD</span><span class="skill-pill">HuggingFace Spaces</span>
+      </div>
+    </div>
+    <div class="skill-group reveal">
+      <div class="skill-group-label">Data Layer</div>
+      <div class="skill-items">
+        <span class="skill-pill">PostgreSQL</span><span class="skill-pill">MongoDB</span><span class="skill-pill">MySQL</span>
+        <span class="skill-pill">Supabase</span><span class="skill-pill">Firebase</span><span class="skill-pill">Redis</span><span class="skill-pill">Kafka</span>
+      </div>
+    </div>
+    <div class="skill-group reveal">
+      <div class="skill-group-label">CS Foundations</div>
+      <div class="skill-items">
+        <span class="skill-pill">DSA (100+ LC)</span><span class="skill-pill">OOP</span><span class="skill-pill">OS</span>
+        <span class="skill-pill">Computer Networks</span><span class="skill-pill">Computer Architecture</span><span class="skill-pill">DBMS</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="certs">
+  <div class="section-tag" data-n="7">credentials</div>
+  <h2 class="section-title">Certifications &amp; <span class="hi">Activities</span></h2>
+  <div class="certs-grid">
+    <div class="cert-card reveal"><div class="cert-icon">⬡</div><div><div class="cert-name">Claude Fluency in AI & Claude 101</div><div class="cert-issuer">ANTHROPIC</div></div></div>
+    <div class="cert-card reveal"><div class="cert-icon">⬡</div><div><div class="cert-name">Forward Learning Programme</div><div class="cert-issuer">MCKINSEY</div></div></div>
+    <div class="cert-card reveal"><div class="cert-icon">⬡</div><div><div class="cert-name">Generative AI & Neural Networks</div><div class="cert-issuer">MICROSOFT AZURE</div></div></div>
+    <div class="cert-card reveal"><div class="cert-icon">⬡</div><div><div class="cert-name">AI/ML Program</div><div class="cert-issuer">IIT PATNA</div></div></div>
+    <div class="cert-card reveal"><div class="cert-icon">⬡</div><div><div class="cert-name">Python (Advanced)</div><div class="cert-issuer">HACKERRANK</div></div></div>
+    <div class="cert-card reveal"><div class="cert-icon">⬡</div><div><div class="cert-name">C Programming</div><div class="cert-issuer">CODECHEF</div></div></div>
+    <div class="cert-card reveal"><div class="cert-icon">⬡</div><div><div class="cert-name">Open Source Contributor</div><div class="cert-issuer">GSSoC · SSoC · HUGGINGFACE</div></div></div>
+    <div class="cert-card reveal"><div class="cert-icon">⬡</div><div><div class="cert-name">National Ice & Inline Hockey Athlete</div><div class="cert-issuer">TEAM KARNATAKA</div></div></div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="contact-inner">
+    <div class="section-tag" data-n="8">contact</div>
+    <h2 class="section-title">Let's <span class="hi">Build</span></h2>
+    <p>Looking for AI engineering / AI safety / full-stack internships at teams building serious things. If you're working on something that needs to be provably correct — I'd love to talk.</p>
+    <a href="mailto:yxshas565@gmail.com" class="contact-email">yxshas565@gmail.com</a>
+    <div class="contact-links">
+      <a href="https://github.com/yxshas565" target="_blank" class="contact-link">GitHub ↗</a>
+      <a href="https://www.linkedin.com/feed/" target="_blank" class="contact-link">LinkedIn ↗</a>
+      <a href="Yashas_Sadananda_Resume_SWE_Intern_1.pdf" target="_blank" class="contact-link">Resume ↓</a>
+      <a href="mailto:yxshas565@gmail.com" class="contact-link">Email ✉</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 YASHAS SADANANDA · BUILT FROM SCRATCH</p>
+  <div class="footer-right">Bengaluru, India · B.Tech CSE · PES University</div>
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY>10);
+});
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach((e,i)=>{ if(e.isIntersecting){ setTimeout(()=>e.target.classList.add('visible'),i*60); } });
+},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
