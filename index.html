@@ -1,502 +1,5755 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Yashas Sadananda · AI Safety & Systems Engineer</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#05070a">
+
+<title>Yashas Sadananda — AI / ML · Systems · Research</title>
+
+<meta name="description"
+content="Yashas Sadananda — Computer Science undergraduate building AI systems, agentic infrastructure, ML research systems and mechanistic AI safety tooling.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
+
+/* =========================================================
+   CORE
+========================================================= */
+
 :root{
-  --bg:#050607; --surface:#0a0d0f; --surface2:#0e1214;
-  --border:#1a2620; --border-hi:#25352c;
-  --acid:#c8ff3d; --acid-dim:#8fb82c; --acid-glow:rgba(200,255,61,0.14);
-  --amber:#ff8c3d;
-  --text:#dfe8e0; --text-dim:#6f8478; --text-mute:#3a4a40;
-  --mono:'JetBrains Mono',monospace; --disp:'Space Grotesk',sans-serif;
+    --bg:#05070a;
+    --bg-2:#080b10;
+    --surface:#0b1017;
+    --surface-2:#0f151e;
+    --surface-3:#121a24;
+
+    --white:#f4f7fb;
+    --text:#dce4ed;
+    --muted:#8391a3;
+    --dim:#536173;
+
+    --cyan:#62e6ff;
+    --cyan-2:#27b9df;
+    --violet:#9c7cff;
+    --purple:#7357e8;
+
+    --green:#70f0b2;
+    --orange:#ffb36b;
+
+    --line:rgba(255,255,255,.075);
+    --line-strong:rgba(255,255,255,.13);
+
+    --glow-cyan:rgba(98,230,255,.14);
+    --glow-violet:rgba(156,124,255,.13);
+
+    --mono:"DM Mono",monospace;
+    --sans:"Inter",sans-serif;
+    --display:"Space Grotesk",sans-serif;
+
+    --max:1280px;
 }
-*{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--text);font-family:var(--disp);overflow-x:hidden;}
-::selection{background:var(--acid);color:#000;}
-::-webkit-scrollbar{width:5px;}
-::-webkit-scrollbar-track{background:var(--bg);}
-::-webkit-scrollbar-thumb{background:var(--border-hi);}
 
-.noise{position:fixed;inset:0;z-index:9995;pointer-events:none;opacity:.03;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
-.grid-bg{position:fixed;inset:0;z-index:0;pointer-events:none;
-  background-image:linear-gradient(rgba(200,255,61,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(200,255,61,0.03) 1px,transparent 1px);
-  background-size:48px 48px;mask-image:radial-gradient(ellipse 80% 60% at 50% 20%,black 40%,transparent 90%);}
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;
-  padding:22px 56px;background:rgba(5,6,7,0.85);backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:border-color .3s;}
-nav.scrolled{border-bottom-color:var(--border);}
-.nav-logo{font-family:var(--mono);font-size:14px;color:var(--acid);letter-spacing:.1em;text-decoration:none;font-weight:700;}
-.nav-logo span{color:var(--text-mute);}
-.nav-links{display:flex;gap:30px;list-style:none;align-items:center;}
-.nav-links a{font-family:var(--mono);font-size:11px;color:var(--text-dim);text-decoration:none;letter-spacing:.14em;text-transform:uppercase;transition:color .2s;}
-.nav-links a:hover{color:var(--acid);}
-.nav-resume{font-family:var(--mono);font-size:11px;color:var(--bg);background:var(--acid);padding:8px 16px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;font-weight:700;}
-.nav-resume:hover{background:#fff;}
-@media(max-width:900px){.nav-links a:not(.nav-resume){display:none;}}
+html{
+    scroll-behavior:smooth;
+}
 
-section,#hero{position:relative;z-index:1;padding:120px 56px;}
-@media(max-width:768px){section,#hero{padding:100px 24px;}}
+body{
+    background:
+        radial-gradient(circle at 15% 10%,rgba(98,230,255,.045),transparent 28%),
+        radial-gradient(circle at 85% 18%,rgba(156,124,255,.045),transparent 28%),
+        var(--bg);
 
-#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding-top:140px;}
-.hero-glow{position:absolute;top:-100px;right:-150px;width:600px;height:600px;
-  background:radial-gradient(circle,rgba(200,255,61,0.08) 0%,transparent 70%);pointer-events:none;filter:blur(20px);}
-.hero-eyebrow{font-family:var(--mono);font-size:12px;color:var(--acid);letter-spacing:.25em;text-transform:uppercase;margin-bottom:22px;
-  display:flex;align-items:center;gap:10px;opacity:0;animation:fadeUp .6s .1s forwards;}
-.hero-eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--acid);box-shadow:0 0 10px var(--acid);animation:pulse 2s infinite;}
-@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.25;}}
-.hero-name{font-family:var(--disp);font-size:clamp(46px,7.5vw,104px);font-weight:700;line-height:.94;letter-spacing:-.03em;color:#fff;
-  opacity:0;animation:fadeUp .7s .2s forwards;}
-.hero-name .last{color:var(--acid);}
-.hero-role{font-family:var(--mono);font-size:clamp(14px,1.6vw,18px);color:var(--text-dim);margin-top:22px;letter-spacing:.02em;max-width:640px;line-height:1.6;
-  opacity:0;animation:fadeUp .6s .35s forwards;}
-.hero-role b{color:var(--text);font-weight:500;}
-.hero-desc{font-size:15.5px;color:var(--text-dim);margin-top:18px;max-width:560px;line-height:1.8;
-  opacity:0;animation:fadeUp .6s .5s forwards;}
-.hero-cta{display:flex;gap:14px;margin-top:38px;flex-wrap:wrap;opacity:0;animation:fadeUp .6s .65s forwards;}
-.btn{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;padding:14px 26px;font-weight:600;transition:all .2s;display:inline-flex;align-items:center;gap:8px;}
-.btn-primary{background:var(--acid);color:#000;border:1px solid var(--acid);}
-.btn-primary:hover{box-shadow:0 0 24px var(--acid-glow);transform:translateY(-2px);}
-.btn-ghost{color:var(--text);border:1px solid var(--border-hi);background:transparent;}
-.btn-ghost:hover{border-color:var(--acid);color:var(--acid);transform:translateY(-2px);}
-.hero-meta{display:flex;gap:36px;margin-top:56px;flex-wrap:wrap;opacity:0;animation:fadeUp .6s .8s forwards;}
-.hero-meta-item{font-family:var(--mono);}
-.hero-meta-num{font-size:26px;color:var(--acid);font-weight:700;line-height:1;}
-.hero-meta-label{font-size:10px;color:var(--text-mute);letter-spacing:.12em;text-transform:uppercase;margin-top:6px;}
+    color:var(--text);
+    font-family:var(--sans);
+    overflow-x:hidden;
+}
 
-.section-tag{font-family:var(--mono);font-size:11px;color:var(--acid);letter-spacing:.28em;text-transform:uppercase;margin-bottom:14px;}
-.section-tag::before{content:'0'attr(data-n)' — ';color:var(--text-mute);}
-.section-title{font-family:var(--disp);font-size:clamp(30px,4vw,50px);font-weight:700;color:#fff;line-height:1.05;margin-bottom:20px;letter-spacing:-.01em;}
-.section-title .hi{color:var(--acid);}
-.section-sub{font-size:15px;color:var(--text-dim);max-width:640px;line-height:1.75;margin-bottom:56px;}
+body.menu-open{
+    overflow:hidden;
+}
 
-/* ABOUT */
-.about-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:64px;}
-@media(max-width:900px){.about-grid{grid-template-columns:1fr;}}
-.about-text p{font-size:16px;line-height:1.9;color:var(--text-dim);margin-bottom:18px;}
-.about-text b{color:var(--text);font-weight:500;}
-.about-text .highlight{color:var(--acid);font-weight:500;}
-.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);}
-.stat-box{background:var(--surface);padding:26px 22px;}
-.stat-box .n{font-family:var(--mono);font-size:32px;color:var(--acid);font-weight:700;}
-.stat-box .l{font-size:11px;color:var(--text-dim);margin-top:6px;letter-spacing:.03em;}
+::selection{
+    background:var(--cyan);
+    color:#031016;
+}
 
-/* FLAGSHIP */
-#flagship{background:linear-gradient(180deg,transparent,rgba(200,255,61,0.025),transparent);}
-.flagship-card{border:1px solid var(--border-hi);background:var(--surface);position:relative;overflow:hidden;padding:52px;}
-.flagship-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:2px;background:linear-gradient(90deg,var(--acid),transparent 60%);}
-.flag-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px;margin-bottom:24px;}
-.flag-badge{font-family:var(--mono);font-size:10px;color:#000;background:var(--acid);padding:5px 12px;letter-spacing:.14em;font-weight:700;}
-.flag-status{font-family:var(--mono);font-size:11px;color:var(--text-dim);letter-spacing:.08em;}
-.flag-title{font-family:var(--disp);font-size:clamp(26px,3.4vw,40px);font-weight:700;color:#fff;margin-bottom:16px;}
-.flag-desc{font-size:15.5px;line-height:1.85;color:var(--text-dim);max-width:780px;margin-bottom:28px;}
-.flag-desc b{color:var(--text);}
-.flag-points{display:grid;grid-template-columns:1fr 1fr;gap:14px 28px;margin-bottom:32px;}
-@media(max-width:700px){.flag-points{grid-template-columns:1fr;}}
-.flag-point{font-size:13.5px;color:var(--text-dim);line-height:1.6;padding-left:18px;position:relative;}
-.flag-point::before{content:'▸';position:absolute;left:0;color:var(--acid);}
-.flag-stack{display:flex;flex-wrap:wrap;gap:8px;}
-.flag-tag{font-family:var(--mono);font-size:11px;color:var(--acid-dim);border:1px solid rgba(200,255,61,0.25);padding:5px 12px;letter-spacing:.05em;}
+a{
+    color:inherit;
+    text-decoration:none;
+}
 
-/* PROJECTS */
-.projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);}
-.project-card{background:var(--surface);padding:34px;position:relative;transition:background .25s;text-decoration:none;display:block;color:inherit;}
-.project-card:hover{background:var(--surface2);}
-.project-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;}
-.project-tag{font-family:var(--mono);font-size:10px;color:var(--acid);letter-spacing:.16em;text-transform:uppercase;display:flex;align-items:center;gap:8px;}
-.project-tag::before{content:'';width:16px;height:1px;background:var(--acid-dim);}
-.project-badge{font-family:var(--mono);font-size:9px;color:var(--amber);border:1px solid rgba(255,140,61,0.35);padding:3px 8px;letter-spacing:.1em;}
-.project-name{font-family:var(--disp);font-size:19px;font-weight:700;color:#fff;line-height:1.25;margin-bottom:10px;}
-.project-desc{font-size:13.5px;color:var(--text-dim);line-height:1.7;margin-bottom:16px;}
-.project-metric{font-family:var(--mono);font-size:11.5px;color:var(--acid-dim);margin-bottom:16px;}
-.project-stack{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px;}
-.stack-tag{font-family:var(--mono);font-size:10px;color:var(--text-dim);border:1px solid var(--border-hi);padding:3px 9px;}
-.project-link{font-family:var(--mono);font-size:11px;color:var(--text);letter-spacing:.08em;display:inline-flex;align-items:center;gap:6px;}
-.project-link::after{content:'↗';color:var(--acid);}
+button{
+    font:inherit;
+}
 
-/* TIMELINE */
-.timeline{position:relative;padding-left:32px;border-left:1px solid var(--border-hi);}
-.tl-item{position:relative;padding-bottom:34px;}
-.tl-item:last-child{padding-bottom:0;}
-.tl-item::before{content:'';position:absolute;left:-37px;top:4px;width:10px;height:10px;border-radius:50%;background:var(--bg);border:2px solid var(--acid);}
-.tl-date{font-family:var(--mono);font-size:11px;color:var(--acid-dim);letter-spacing:.1em;margin-bottom:6px;}
-.tl-title{font-family:var(--disp);font-size:16px;font-weight:600;color:#fff;margin-bottom:4px;}
-.tl-desc{font-size:13px;color:var(--text-dim);line-height:1.65;max-width:600px;}
+img{
+    max-width:100%;
+    display:block;
+}
 
-/* SKILLS */
-.skills-container{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);}
-.skill-group{background:var(--surface);padding:26px;}
-.skill-group-label{font-family:var(--mono);font-size:10px;color:var(--acid);letter-spacing:.2em;text-transform:uppercase;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border);}
-.skill-items{display:flex;flex-wrap:wrap;gap:7px;}
-.skill-pill{font-family:var(--mono);font-size:11px;color:var(--text-dim);background:rgba(200,255,61,0.03);border:1px solid var(--border-hi);padding:5px 11px;transition:all .2s;}
-.skill-pill:hover{color:var(--acid);border-color:var(--acid);background:var(--acid-glow);}
+::-webkit-scrollbar{
+    width:6px;
+}
 
-/* CERTS */
-.certs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);}
-.cert-card{background:var(--surface);padding:22px 26px;display:flex;gap:14px;align-items:flex-start;}
-.cert-icon{font-family:var(--mono);color:var(--acid);font-size:16px;min-width:22px;}
-.cert-name{font-size:13.5px;font-weight:500;color:#fff;line-height:1.4;margin-bottom:4px;}
-.cert-issuer{font-family:var(--mono);font-size:10px;color:var(--text-dim);letter-spacing:.08em;}
+::-webkit-scrollbar-track{
+    background:var(--bg);
+}
 
-/* RESEARCH */
-#research .research-box{border:1px solid var(--border-hi);background:var(--surface);padding:44px;}
-.research-line{font-size:15px;color:var(--text-dim);line-height:1.9;margin-bottom:16px;}
-.research-line:last-child{margin-bottom:0;}
-.research-line b{color:var(--acid-dim);font-weight:500;}
+::-webkit-scrollbar-thumb{
+    background:#202b38;
+}
 
-/* CONTACT */
-#contact{text-align:center;}
-.contact-inner{max-width:640px;margin:0 auto;}
-#contact p{font-size:16px;color:var(--text-dim);line-height:1.85;margin-bottom:36px;}
-.contact-email{font-family:var(--mono);font-size:clamp(20px,3vw,30px);color:var(--acid);letter-spacing:.02em;margin-bottom:32px;display:inline-block;text-decoration:none;font-weight:700;}
-.contact-email:hover{text-shadow:0 0 24px var(--acid-glow);}
-.contact-links{display:flex;justify-content:center;flex-wrap:wrap;gap:14px;}
-.contact-link{font-family:var(--mono);font-size:12px;letter-spacing:.1em;color:var(--text-dim);text-decoration:none;border:1px solid var(--border-hi);padding:12px 22px;transition:all .2s;}
-.contact-link:hover{color:var(--acid);border-color:var(--acid);background:var(--acid-glow);}
+::-webkit-scrollbar-thumb:hover{
+    background:#334356;
+}
 
-footer{border-top:1px solid var(--border);padding:26px 56px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;position:relative;z-index:1;}
-footer p,.footer-right{font-family:var(--mono);font-size:10px;color:var(--text-mute);letter-spacing:.08em;}
 
-@keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
-.reveal{opacity:0;transform:translateY(22px);transition:opacity .6s,transform .6s;}
-.reveal.visible{opacity:1;transform:translateY(0);}
-.blink{animation:blink 1s step-end infinite;}
-@keyframes blink{50%{opacity:0;}}
+/* =========================================================
+   AMBIENT BACKGROUND
+========================================================= */
+
+.ambient{
+    position:fixed;
+    inset:0;
+    z-index:-10;
+    pointer-events:none;
+    overflow:hidden;
+}
+
+.ambient-grid{
+    position:absolute;
+    inset:0;
+
+    background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+
+    background-size:60px 60px;
+
+    mask-image:
+        radial-gradient(
+            ellipse 80% 70% at 50% 20%,
+            black 15%,
+            transparent 82%
+        );
+}
+
+.orb{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(100px);
+    opacity:.25;
+}
+
+.orb.one{
+    width:500px;
+    height:500px;
+    background:var(--cyan);
+    left:-280px;
+    top:100px;
+    animation:floatOne 14s ease-in-out infinite;
+}
+
+.orb.two{
+    width:450px;
+    height:450px;
+    background:var(--violet);
+    right:-260px;
+    top:300px;
+    animation:floatTwo 17s ease-in-out infinite;
+}
+
+.orb.three{
+    width:350px;
+    height:350px;
+    background:#2456ff;
+    left:45%;
+    top:75%;
+    opacity:.10;
+    animation:floatThree 20s ease-in-out infinite;
+}
+
+@keyframes floatOne{
+    0%,100%{transform:translate(0,0)}
+    50%{transform:translate(100px,80px)}
+}
+
+@keyframes floatTwo{
+    0%,100%{transform:translate(0,0)}
+    50%{transform:translate(-100px,100px)}
+}
+
+@keyframes floatThree{
+    0%,100%{transform:translate(0,0)}
+    50%{transform:translate(80px,-100px)}
+}
+
+.noise{
+    position:fixed;
+    inset:0;
+    z-index:9999;
+    pointer-events:none;
+    opacity:.025;
+
+    background-image:url(
+        "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E"
+    );
+}
+
+
+/* =========================================================
+   CURSOR GLOW
+========================================================= */
+
+.cursor-glow{
+    position:fixed;
+    width:420px;
+    height:420px;
+    border-radius:50%;
+    pointer-events:none;
+    z-index:0;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(98,230,255,.055) 0%,
+            rgba(156,124,255,.025) 35%,
+            transparent 70%
+        );
+
+    transform:translate(-50%,-50%);
+    transition:
+        left .15s ease-out,
+        top .15s ease-out;
+}
+
+@media(max-width:700px){
+    .cursor-glow{
+        display:none;
+    }
+}
+
+
+/* =========================================================
+   GLOBAL LAYOUT
+========================================================= */
+
+.container{
+    width:min(var(--max),calc(100% - 64px));
+    margin:auto;
+}
+
+section{
+    position:relative;
+    padding:130px 0;
+}
+
+.section-head{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:40px;
+    margin-bottom:58px;
+}
+
+.section-index{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.18em;
+    color:var(--cyan);
+    margin-bottom:15px;
+}
+
+.section-index span{
+    color:var(--dim);
+}
+
+.section-title{
+    font-family:var(--display);
+    font-size:clamp(38px,5vw,70px);
+    line-height:1;
+    letter-spacing:-.045em;
+    color:var(--white);
+}
+
+.section-title em{
+    color:var(--cyan);
+    font-style:normal;
+}
+
+.section-copy{
+    max-width:520px;
+    color:var(--muted);
+    font-size:15px;
+    line-height:1.8;
+}
+
+.divider{
+    width:100%;
+    height:1px;
+    background:var(--line);
+}
+
+
+/* =========================================================
+   NAV
+========================================================= */
+
+.nav{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    z-index:500;
+
+    height:76px;
+
+    display:flex;
+    align-items:center;
+
+    background:rgba(5,7,10,.60);
+    backdrop-filter:blur(22px);
+    -webkit-backdrop-filter:blur(22px);
+
+    border-bottom:1px solid transparent;
+
+    transition:
+        background .3s,
+        border-color .3s,
+        box-shadow .3s;
+}
+
+.nav.scrolled{
+    background:rgba(5,7,10,.88);
+    border-color:var(--line);
+    box-shadow:0 10px 40px rgba(0,0,0,.25);
+}
+
+.nav-inner{
+    width:min(var(--max),calc(100% - 64px));
+    margin:auto;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:11px;
+
+    font-family:var(--mono);
+    font-size:13px;
+    letter-spacing:.08em;
+}
+
+.logo-mark{
+    width:28px;
+    height:28px;
+
+    display:grid;
+    place-items:center;
+
+    border:1px solid rgba(98,230,255,.5);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(98,230,255,.12),
+            rgba(156,124,255,.08)
+        );
+
+    color:var(--cyan);
+    font-weight:500;
+
+    box-shadow:
+        0 0 25px rgba(98,230,255,.08);
+}
+
+.logo-name{
+    color:var(--white);
+}
+
+.logo-name span{
+    color:var(--dim);
+}
+
+.nav-links{
+    display:flex;
+    align-items:center;
+    gap:28px;
+    list-style:none;
+}
+
+.nav-links a{
+    font-family:var(--mono);
+    font-size:10px;
+    color:var(--muted);
+    letter-spacing:.11em;
+    text-transform:uppercase;
+    transition:color .2s;
+}
+
+.nav-links a:hover{
+    color:var(--white);
+}
+
+.nav-cta{
+    padding:9px 14px;
+    border:1px solid rgba(98,230,255,.4);
+    color:var(--cyan)!important;
+    background:rgba(98,230,255,.035);
+}
+
+.nav-cta:hover{
+    background:rgba(98,230,255,.10);
+}
+
+.mobile-toggle{
+    display:none;
+    width:40px;
+    height:40px;
+    border:1px solid var(--line);
+    background:var(--surface);
+    color:var(--white);
+    cursor:pointer;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    padding-top:150px;
+    padding-bottom:100px;
+}
+
+.hero-layout{
+    display:grid;
+    grid-template-columns:1.2fr .8fr;
+    gap:80px;
+    align-items:center;
+}
+
+.hero-eyebrow{
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    font-family:var(--mono);
+    font-size:10px;
+    letter-spacing:.17em;
+    text-transform:uppercase;
+
+    color:var(--cyan);
+    margin-bottom:28px;
+}
+
+.status-dot{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:var(--green);
+    box-shadow:0 0 15px rgba(112,240,178,.7);
+
+    animation:pulseDot 2s infinite;
+}
+
+@keyframes pulseDot{
+    0%,100%{opacity:1}
+    50%{opacity:.35}
+}
+
+.hero-title{
+    font-family:var(--display);
+    font-size:clamp(64px,9vw,132px);
+    font-weight:700;
+    line-height:.86;
+    letter-spacing:-.065em;
+    color:var(--white);
+}
+
+.hero-title .gradient{
+    background:
+        linear-gradient(
+            100deg,
+            var(--cyan),
+            #fff 42%,
+            var(--violet)
+        );
+
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+
+    background-size:180% 100%;
+    animation:gradientMove 7s ease-in-out infinite;
+}
+
+@keyframes gradientMove{
+    0%,100%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+}
+
+.hero-role{
+    margin-top:34px;
+
+    max-width:760px;
+
+    font-family:var(--mono);
+    font-size:14px;
+    line-height:1.8;
+
+    color:var(--muted);
+}
+
+.hero-role strong{
+    color:var(--white);
+    font-weight:500;
+}
+
+.hero-description{
+    margin-top:18px;
+
+    max-width:660px;
+
+    color:var(--muted);
+    font-size:15px;
+    line-height:1.85;
+}
+
+.hero-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+    margin-top:38px;
+}
+
+.btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:9px;
+
+    padding:13px 19px;
+
+    font-family:var(--mono);
+    font-size:10px;
+    letter-spacing:.11em;
+    text-transform:uppercase;
+
+    border:1px solid var(--line-strong);
+
+    transition:
+        transform .25s,
+        border-color .25s,
+        background .25s,
+        box-shadow .25s;
+
+    position:relative;
+    overflow:hidden;
+}
+
+.btn:hover{
+    transform:translateY(-3px);
+}
+
+.btn-primary{
+    background:var(--white);
+    color:#05070a;
+    border-color:var(--white);
+}
+
+.btn-primary:hover{
+    box-shadow:0 14px 40px rgba(255,255,255,.10);
+}
+
+.btn-secondary{
+    color:var(--white);
+    background:rgba(255,255,255,.025);
+}
+
+.btn-secondary:hover{
+    border-color:var(--cyan);
+    color:var(--cyan);
+    background:rgba(98,230,255,.045);
+}
+
+.btn::after{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-100%;
+    width:70%;
+    height:100%;
+    background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.16),
+        transparent
+    );
+    transform:skewX(-20deg);
+    transition:left .5s;
+}
+
+.btn:hover::after{
+    left:140%;
+}
+
+
+/* =========================================================
+   HERO SYSTEM PANEL
+========================================================= */
+
+.hero-panel{
+    position:relative;
+}
+
+.system-card{
+    position:relative;
+
+    padding:22px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.045),
+            rgba(255,255,255,.012)
+        );
+
+    border:1px solid var(--line-strong);
+
+    box-shadow:
+        0 30px 100px rgba(0,0,0,.35),
+        inset 0 1px rgba(255,255,255,.04);
+
+    overflow:hidden;
+}
+
+.system-card::before{
+    content:"";
+    position:absolute;
+    inset:0;
+
+    background:
+        radial-gradient(
+            circle at 75% 20%,
+            rgba(98,230,255,.11),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 20% 90%,
+            rgba(156,124,255,.10),
+            transparent 35%
+        );
+
+    pointer-events:none;
+}
+
+.system-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding-bottom:16px;
+    border-bottom:1px solid var(--line);
+}
+
+.system-title{
+    font-family:var(--mono);
+    font-size:10px;
+    color:var(--muted);
+    letter-spacing:.1em;
+}
+
+.system-live{
+    font-family:var(--mono);
+    font-size:9px;
+    color:var(--green);
+}
+
+.system-body{
+    position:relative;
+    padding:25px 0 10px;
+}
+
+.system-command{
+    font-family:var(--mono);
+    font-size:10px;
+    color:var(--dim);
+    margin-bottom:12px;
+}
+
+.system-command span{
+    color:var(--cyan);
+}
+
+.system-name{
+    font-family:var(--display);
+    font-size:29px;
+    font-weight:600;
+    color:var(--white);
+    margin-bottom:22px;
+}
+
+.system-flow{
+    display:flex;
+    flex-direction:column;
+    gap:0;
+}
+
+.flow-node{
+    display:grid;
+    grid-template-columns:30px 1fr auto;
+    align-items:center;
+    gap:12px;
+
+    min-height:58px;
+
+    padding:10px 12px;
+
+    border:1px solid var(--line);
+    background:rgba(255,255,255,.018);
+}
+
+.flow-node + .flow-node{
+    border-top:0;
+}
+
+.flow-icon{
+    width:26px;
+    height:26px;
+
+    display:grid;
+    place-items:center;
+
+    border:1px solid rgba(98,230,255,.22);
+
+    color:var(--cyan);
+    font-family:var(--mono);
+    font-size:9px;
+}
+
+.flow-main{
+    font-size:11px;
+    color:var(--white);
+}
+
+.flow-sub{
+    font-family:var(--mono);
+    font-size:8px;
+    color:var(--dim);
+    margin-top:3px;
+}
+
+.flow-status{
+    font-family:var(--mono);
+    font-size:8px;
+    color:var(--green);
+}
+
+.system-footer{
+    margin-top:17px;
+
+    display:flex;
+    justify-content:space-between;
+
+    font-family:var(--mono);
+    font-size:8px;
+    color:var(--dim);
+}
+
+
+/* =========================================================
+   QUICK STRIP
+========================================================= */
+
+.quick-strip{
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    background:rgba(255,255,255,.012);
+}
+
+.quick-inner{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+}
+
+.quick-item{
+    padding:22px 24px;
+    border-right:1px solid var(--line);
+}
+
+.quick-item:last-child{
+    border-right:0;
+}
+
+.quick-label{
+    font-family:var(--mono);
+    font-size:8px;
+    letter-spacing:.13em;
+    text-transform:uppercase;
+    color:var(--dim);
+    margin-bottom:7px;
+}
+
+.quick-value{
+    font-family:var(--display);
+    font-size:14px;
+    color:var(--white);
+}
+
+
+/* =========================================================
+   ABOUT
+========================================================= */
+
+.about-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:70px;
+}
+
+.about-copy{
+    color:var(--muted);
+    font-size:16px;
+    line-height:1.95;
+}
+
+.about-copy p + p{
+    margin-top:22px;
+}
+
+.about-copy strong{
+    color:var(--white);
+    font-weight:600;
+}
+
+.about-copy .cyan{
+    color:var(--cyan);
+}
+
+.about-side{
+    display:grid;
+    gap:1px;
+
+    background:var(--line);
+    border:1px solid var(--line);
+}
+
+.about-card{
+    padding:25px;
+
+    background:var(--surface);
+
+    display:flex;
+    justify-content:space-between;
+    gap:30px;
+}
+
+.about-card-label{
+    font-family:var(--mono);
+    font-size:9px;
+    text-transform:uppercase;
+    letter-spacing:.12em;
+    color:var(--dim);
+}
+
+.about-card-value{
+    text-align:right;
+    color:var(--white);
+    font-size:13px;
+}
+
+
+/* =========================================================
+   EDGE DAEMON
+========================================================= */
+
+.flagship{
+    background:
+        linear-gradient(
+            180deg,
+            transparent,
+            rgba(98,230,255,.018),
+            transparent
+        );
+}
+
+.flagship-shell{
+    position:relative;
+
+    border:1px solid var(--line-strong);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(98,230,255,.035),
+            rgba(156,124,255,.025) 45%,
+            rgba(255,255,255,.012)
+        );
+
+    padding:50px;
+
+    overflow:hidden;
+}
+
+.flagship-shell::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--cyan),
+            var(--violet),
+            transparent
+        );
+}
+
+.flagship-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:30px;
+    margin-bottom:30px;
+}
+
+.flagship-label{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+
+    font-family:var(--mono);
+    font-size:9px;
+    letter-spacing:.13em;
+    color:var(--cyan);
+    text-transform:uppercase;
+
+    padding:6px 10px;
+
+    border:1px solid rgba(98,230,255,.25);
+    background:rgba(98,230,255,.035);
+}
+
+.flagship-status{
+    font-family:var(--mono);
+    font-size:9px;
+    color:var(--green);
+}
+
+.flagship-title{
+    font-family:var(--display);
+    font-size:clamp(40px,6vw,78px);
+    letter-spacing:-.055em;
+    line-height:.95;
+    color:var(--white);
+}
+
+.flagship-title span{
+    color:var(--cyan);
+}
+
+.flagship-description{
+    max-width:850px;
+    margin-top:24px;
+
+    color:var(--muted);
+    font-size:16px;
+    line-height:1.9;
+}
+
+.flagship-description strong{
+    color:var(--white);
+}
+
+.flagship-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:1px;
+
+    background:var(--line);
+    border:1px solid var(--line);
+
+    margin-top:42px;
+}
+
+.flag-card{
+    background:rgba(7,10,14,.75);
+    padding:27px;
+}
+
+.flag-card-label{
+    font-family:var(--mono);
+    font-size:9px;
+    letter-spacing:.13em;
+    text-transform:uppercase;
+    color:var(--cyan);
+    margin-bottom:14px;
+}
+
+.flag-card h3{
+    font-family:var(--display);
+    font-size:18px;
+    color:var(--white);
+    margin-bottom:9px;
+}
+
+.flag-card p{
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.75;
+}
+
+.flag-stack{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+
+    margin-top:30px;
+}
+
+.tech{
+    font-family:var(--mono);
+    font-size:9px;
+    color:var(--muted);
+
+    border:1px solid var(--line-strong);
+    background:rgba(255,255,255,.02);
+
+    padding:6px 9px;
+}
+
+
+/* =========================================================
+   PROJECTS
+========================================================= */
+
+.project-toolbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+
+    margin-bottom:28px;
+}
+
+.filters{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+}
+
+.filter{
+    border:1px solid var(--line);
+    background:transparent;
+
+    color:var(--muted);
+
+    padding:8px 12px;
+
+    font-family:var(--mono);
+    font-size:9px;
+    letter-spacing:.08em;
+
+    cursor:pointer;
+
+    transition:
+        color .2s,
+        border-color .2s,
+        background .2s;
+}
+
+.filter:hover,
+.filter.active{
+    color:var(--white);
+    border-color:rgba(98,230,255,.4);
+    background:rgba(98,230,255,.05);
+}
+
+.project-count{
+    font-family:var(--mono);
+    font-size:9px;
+    color:var(--dim);
+}
+
+.projects-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:1px;
+
+    background:var(--line);
+    border:1px solid var(--line);
+}
+
+.project{
+    min-height:390px;
+
+    padding:30px;
+
+    background:var(--surface);
+
+    position:relative;
+    overflow:hidden;
+
+    display:flex;
+    flex-direction:column;
+
+    transition:
+        background .3s,
+        transform .3s;
+}
+
+.project:hover{
+    background:var(--surface-2);
+}
+
+.project::before{
+    content:"";
+    position:absolute;
+    width:220px;
+    height:220px;
+    border-radius:50%;
+
+    right:-130px;
+    top:-130px;
+
+    background:var(--glow-cyan);
+
+    filter:blur(30px);
+
+    opacity:0;
+
+    transition:opacity .35s;
+}
+
+.project:hover::before{
+    opacity:1;
+}
+
+.project-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    margin-bottom:28px;
+}
+
+.project-number{
+    font-family:var(--mono);
+    font-size:9px;
+    color:var(--dim);
+}
+
+.project-type{
+    font-family:var(--mono);
+    font-size:8px;
+    color:var(--cyan);
+    text-transform:uppercase;
+    letter-spacing:.12em;
+}
+
+.project h3{
+    font-family:var(--display);
+    font-size:22px;
+    line-height:1.1;
+    letter-spacing:-.025em;
+
+    color:var(--white);
+
+    margin-bottom:13px;
+}
+
+.project-description{
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.75;
+}
+
+.project-bottom{
+    margin-top:auto;
+}
+
+.project-stack{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+
+    margin-top:25px;
+}
+
+.project-stack span{
+    font-family:var(--mono);
+    font-size:8px;
+    color:var(--dim);
+
+    border:1px solid var(--line);
+    padding:5px 7px;
+}
+
+.project-link{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    margin-top:25px;
+
+    padding-top:17px;
+    border-top:1px solid var(--line);
+
+    font-family:var(--mono);
+    font-size:9px;
+    color:var(--white);
+
+    transition:color .2s;
+}
+
+.project-link span{
+    color:var(--cyan);
+    transition:transform .2s;
+}
+
+.project:hover .project-link{
+    color:var(--cyan);
+}
+
+.project:hover .project-link span{
+    transform:translate(3px,-3px);
+}
+
+.project.hidden{
+    display:none;
+}
+
+
+/* =========================================================
+   NEW — DEPLOYED / LIVE SYSTEMS
+========================================================= */
+
+.live-section{
+    background:
+        linear-gradient(
+            180deg,
+            transparent,
+            rgba(112,240,178,.012),
+            transparent
+        );
+}
+
+.live-intro{
+    max-width:720px;
+    color:var(--muted);
+    font-size:14px;
+    line-height:1.85;
+    margin-bottom:32px;
+}
+
+.live-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+}
+
+.live-card{
+    position:relative;
+    background:var(--surface);
+    padding:30px;
+    min-height:235px;
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+    transition:
+        background .3s,
+        transform .3s,
+        border-color .3s;
+}
+
+.live-card:hover{
+    background:var(--surface-2);
+    transform:translateY(-3px);
+}
+
+.live-card::after{
+    content:"";
+    position:absolute;
+    width:190px;
+    height:190px;
+    right:-100px;
+    bottom:-110px;
+    border-radius:50%;
+    background:var(--glow-cyan);
+    filter:blur(35px);
+    opacity:0;
+    transition:opacity .35s;
+}
+
+.live-card:hover::after{
+    opacity:1;
+}
+
+.live-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    position:relative;
+    z-index:1;
+}
+
+.live-status{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    font-family:var(--mono);
+    font-size:8px;
+    color:var(--green);
+    letter-spacing:.13em;
+    text-transform:uppercase;
+}
+
+.live-dot{
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background:var(--green);
+    box-shadow:0 0 12px rgba(112,240,178,.6);
+}
+
+.live-type{
+    font-family:var(--mono);
+    font-size:8px;
+    color:var(--dim);
+    letter-spacing:.1em;
+    text-transform:uppercase;
+}
+
+.live-card h3{
+    position:relative;
+    z-index:1;
+    font-family:var(--display);
+    font-size:25px;
+    line-height:1.05;
+    letter-spacing:-.035em;
+    color:var(--white);
+    margin-top:35px;
+}
+
+.live-card p{
+    position:relative;
+    z-index:1;
+    color:var(--muted);
+    font-size:12px;
+    line-height:1.75;
+    margin-top:11px;
+    max-width:560px;
+}
+
+.live-actions{
+    position:relative;
+    z-index:2;
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:auto;
+    padding-top:22px;
+}
+
+.live-action{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    font-family:var(--mono);
+    font-size:9px;
+    color:var(--white);
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    padding:8px 10px;
+    border:1px solid var(--line-strong);
+    background:rgba(255,255,255,.02);
+    transition:.25s;
+}
+
+.live-action:hover{
+    color:var(--cyan);
+    border-color:rgba(98,230,255,.35);
+    background:rgba(98,230,255,.04);
+}
+
+.live-card.primary-live{
+    background:
+        radial-gradient(
+            circle at 85% 15%,
+            rgba(98,230,255,.07),
+            transparent 35%
+        ),
+        var(--surface);
+}
+
+.live-card.research-live{
+    background:
+        radial-gradient(
+            circle at 85% 15%,
+            rgba(156,124,255,.08),
+            transparent 35%
+        ),
+        var(--surface);
+}
+
+.live-url{
+    color:var(--dim);
+    font-family:var(--mono);
+    font-size:8px;
+    margin-top:10px;
+    word-break:break-all;
+}
+
+
+/* =========================================================
+   RESEARCH
+========================================================= */
+
+.research-layout{
+    display:grid;
+    grid-template-columns:.75fr 1.25fr;
+    gap:80px;
+}
+
+.research-intro{
+    position:sticky;
+    top:120px;
+    align-self:start;
+}
+
+.research-kicker{
+    font-family:var(--mono);
+    font-size:10px;
+    color:var(--violet);
+    letter-spacing:.15em;
+    text-transform:uppercase;
+    margin-bottom:18px;
+}
+
+.research-intro h3{
+    font-family:var(--display);
+    font-size:36px;
+    letter-spacing:-.04em;
+    color:var(--white);
+    line-height:1.05;
+}
+
+.research-intro p{
+    color:var(--muted);
+    line-height:1.8;
+    font-size:14px;
+    margin-top:20px;
+}
+
+.research-items{
+    display:grid;
+    gap:1px;
+
+    background:var(--line);
+    border:1px solid var(--line);
+}
+
+.research-item{
+    background:var(--surface);
+    padding:30px;
+
+    display:grid;
+    grid-template-columns:75px 1fr;
+    gap:25px;
+}
+
+.research-index{
+    font-family:var(--mono);
+    font-size:10px;
+    color:var(--violet);
+}
+
+.research-item h4{
+    font-family:var(--display);
+    font-size:20px;
+    color:var(--white);
+    margin-bottom:9px;
+}
+
+.research-item p{
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.8;
+}
+
+
+/* =========================================================
+   EXPERIENCE
+========================================================= */
+
+.experience{
+    position:relative;
+}
+
+.timeline{
+    position:relative;
+    max-width:950px;
+    margin:auto;
+}
+
+.timeline::before{
+    content:"";
+    position:absolute;
+    left:116px;
+    top:0;
+    bottom:0;
+    width:1px;
+    background:var(--line-strong);
+}
+
+.timeline-item{
+    display:grid;
+    grid-template-columns:116px 1fr;
+    gap:40px;
+
+    position:relative;
+    padding-bottom:48px;
+}
+
+.timeline-date{
+    font-family:var(--mono);
+    font-size:9px;
+    color:var(--dim);
+    padding-top:5px;
+    text-align:right;
+}
+
+.timeline-dot{
+    position:absolute;
+    left:111px;
+    top:2px;
+
+    width:11px;
+    height:11px;
+
+    border-radius:50%;
+
+    background:var(--bg);
+
+    border:2px solid var(--cyan);
+
+    box-shadow:
+        0 0 18px rgba(98,230,255,.25);
+}
+
+.timeline-card{
+    border:1px solid var(--line);
+    background:var(--surface);
+    padding:27px;
+
+    transition:
+        border-color .25s,
+        background .25s;
+}
+
+.timeline-card:hover{
+    border-color:var(--line-strong);
+    background:var(--surface-2);
+}
+
+.timeline-card h3{
+    font-family:var(--display);
+    font-size:20px;
+    color:var(--white);
+}
+
+.timeline-role{
+    font-family:var(--mono);
+    font-size:9px;
+    color:var(--cyan);
+    margin-top:7px;
+}
+
+.timeline-card p{
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.8;
+    margin-top:15px;
+}
+
+
+/* =========================================================
+   SKILLS
+========================================================= */
+
+.skills-layout{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:1px;
+
+    background:var(--line);
+    border:1px solid var(--line);
+}
+
+.skill-group{
+    background:var(--surface);
+    padding:30px;
+}
+
+.skill-group:hover{
+    background:var(--surface-2);
+}
+
+.skill-title{
+    font-family:var(--mono);
+    font-size:9px;
+    letter-spacing:.13em;
+    text-transform:uppercase;
+    color:var(--cyan);
+
+    padding-bottom:14px;
+    border-bottom:1px solid var(--line);
+
+    margin-bottom:18px;
+}
+
+.skill-list{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+}
+
+.skill{
+    font-family:var(--mono);
+    font-size:9px;
+
+    color:var(--muted);
+
+    border:1px solid var(--line);
+    padding:7px 9px;
+
+    transition:
+        color .2s,
+        border-color .2s,
+        background .2s;
+}
+
+.skill:hover{
+    color:var(--white);
+    border-color:rgba(98,230,255,.35);
+    background:rgba(98,230,255,.035);
+}
+
+
+/* =========================================================
+   CREDENTIALS
+========================================================= */
+
+.credentials-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:1px;
+
+    background:var(--line);
+    border:1px solid var(--line);
+}
+
+.credential{
+    min-height:160px;
+    background:var(--surface);
+    padding:25px;
+
+    display:flex;
+    flex-direction:column;
+}
+
+.credential:hover{
+    background:var(--surface-2);
+}
+
+.credential-mark{
+    width:30px;
+    height:30px;
+
+    display:grid;
+    place-items:center;
+
+    border:1px solid var(--line-strong);
+
+    font-family:var(--mono);
+    font-size:10px;
+    color:var(--cyan);
+
+    margin-bottom:auto;
+}
+
+.credential h4{
+    font-family:var(--display);
+    font-size:14px;
+    color:var(--white);
+    margin-top:25px;
+}
+
+.credential p{
+    font-family:var(--mono);
+    font-size:8px;
+    color:var(--dim);
+    margin-top:6px;
+}
+
+
+/* =========================================================
+   OPEN SOURCE / ACTIVITIES
+========================================================= */
+
+.activity-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:1px;
+
+    background:var(--line);
+    border:1px solid var(--line);
+}
+
+.activity{
+    padding:28px;
+    background:var(--surface);
+
+    display:flex;
+    gap:18px;
+}
+
+.activity-icon{
+    flex:none;
+
+    width:36px;
+    height:36px;
+
+    display:grid;
+    place-items:center;
+
+    border:1px solid var(--line-strong);
+
+    color:var(--cyan);
+    font-family:var(--mono);
+    font-size:10px;
+}
+
+.activity h4{
+    font-family:var(--display);
+    font-size:16px;
+    color:var(--white);
+}
+
+.activity p{
+    color:var(--muted);
+    font-size:12px;
+    line-height:1.7;
+    margin-top:6px;
+}
+
+
+/* =========================================================
+   ARCHIVE
+========================================================= */
+
+.archive-intro{
+    max-width:700px;
+    color:var(--muted);
+    font-size:14px;
+    line-height:1.8;
+    margin-bottom:30px;
+}
+
+.archive-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:8px;
+}
+
+.archive-link{
+    padding:16px;
+
+    border:1px solid var(--line);
+
+    background:rgba(255,255,255,.012);
+
+    font-family:var(--mono);
+    font-size:9px;
+    color:var(--muted);
+
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+
+    transition:
+        color .2s,
+        border-color .2s,
+        background .2s;
+}
+
+.archive-link:hover{
+    color:var(--cyan);
+    border-color:rgba(98,230,255,.3);
+    background:rgba(98,230,255,.03);
+}
+
+.archive-arrow{
+    color:var(--dim);
+}
+
+
+/* =========================================================
+   NEW — RESUME
+========================================================= */
+
+.resume-section{
+    padding-top:100px;
+}
+
+.resume-shell{
+    position:relative;
+    overflow:hidden;
+
+    border:1px solid var(--line-strong);
+
+    background:
+        radial-gradient(
+            circle at 85% 20%,
+            rgba(156,124,255,.10),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 15% 85%,
+            rgba(98,230,255,.07),
+            transparent 32%
+        ),
+        var(--surface);
+
+    padding:52px;
+}
+
+.resume-shell::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            var(--cyan),
+            var(--violet),
+            transparent
+        );
+}
+
+.resume-layout{
+    display:grid;
+    grid-template-columns:1fr auto;
+    gap:50px;
+    align-items:center;
+}
+
+.resume-kicker{
+    font-family:var(--mono);
+    font-size:9px;
+    letter-spacing:.16em;
+    color:var(--cyan);
+    text-transform:uppercase;
+    margin-bottom:18px;
+}
+
+.resume-title{
+    font-family:var(--display);
+    font-size:clamp(38px,5vw,64px);
+    line-height:.95;
+    letter-spacing:-.05em;
+    color:var(--white);
+}
+
+.resume-title span{
+    color:var(--cyan);
+}
+
+.resume-copy{
+    max-width:650px;
+    color:var(--muted);
+    font-size:14px;
+    line-height:1.8;
+    margin-top:18px;
+}
+
+.resume-meta{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+    margin-top:22px;
+}
+
+.resume-meta span{
+    font-family:var(--mono);
+    font-size:8px;
+    color:var(--dim);
+    padding:6px 8px;
+    border:1px solid var(--line);
+}
+
+.resume-actions{
+    display:flex;
+    flex-direction:column;
+    gap:9px;
+    min-width:180px;
+}
+
+.resume-file{
+    color:var(--dim);
+    font-family:var(--mono);
+    font-size:8px;
+    margin-top:13px;
+    text-align:center;
+}
+
+
+/* =========================================================
+   CONTACT
+========================================================= */
+
+.contact{
+    padding-bottom:90px;
+}
+
+.contact-shell{
+    position:relative;
+    overflow:hidden;
+
+    padding:75px 60px;
+
+    border:1px solid var(--line-strong);
+
+    background:
+        radial-gradient(
+            circle at 15% 20%,
+            rgba(98,230,255,.08),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 85% 80%,
+            rgba(156,124,255,.08),
+            transparent 35%
+        ),
+        var(--surface);
+}
+
+.contact-shell::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    height:1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            var(--cyan),
+            var(--violet),
+            transparent
+        );
+}
+
+.contact-content{
+    position:relative;
+    max-width:800px;
+}
+
+.contact-kicker{
+    font-family:var(--mono);
+    font-size:10px;
+    color:var(--cyan);
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    margin-bottom:20px;
+}
+
+.contact-title{
+    font-family:var(--display);
+    font-size:clamp(45px,6vw,78px);
+    line-height:.95;
+    letter-spacing:-.055em;
+    color:var(--white);
+}
+
+.contact-title span{
+    color:var(--cyan);
+}
+
+.contact-copy{
+    max-width:620px;
+    color:var(--muted);
+    line-height:1.85;
+    margin-top:20px;
+    font-size:15px;
+}
+
+.contact-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:30px;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer{
+    border-top:1px solid var(--line);
+    padding:28px 0;
+}
+
+.footer-inner{
+    width:min(var(--max),calc(100% - 64px));
+    margin:auto;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+}
+
+.footer-left,
+.footer-right{
+    font-family:var(--mono);
+    font-size:8px;
+    color:var(--dim);
+    letter-spacing:.08em;
+}
+
+.footer-right{
+    display:flex;
+    gap:18px;
+}
+
+.footer-right a:hover{
+    color:var(--cyan);
+}
+
+
+/* =========================================================
+   SCROLL PROGRESS
+========================================================= */
+
+.scroll-progress{
+    position:fixed;
+    left:0;
+    top:0;
+
+    width:0;
+    height:2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--cyan),
+            var(--violet)
+        );
+
+    z-index:1000;
+}
+
+
+/* =========================================================
+   COMMAND PALETTE
+========================================================= */
+
+.command{
+    position:fixed;
+    inset:0;
+
+    z-index:900;
+
+    display:none;
+    align-items:flex-start;
+    justify-content:center;
+
+    padding-top:16vh;
+
+    background:rgba(0,0,0,.65);
+    backdrop-filter:blur(12px);
+}
+
+.command.open{
+    display:flex;
+}
+
+.command-box{
+    width:min(620px,calc(100% - 32px));
+
+    border:1px solid var(--line-strong);
+
+    background:#0a0e14;
+
+    box-shadow:
+        0 40px 100px rgba(0,0,0,.55);
+}
+
+.command-input{
+    width:100%;
+
+    border:0;
+    border-bottom:1px solid var(--line);
+
+    outline:0;
+
+    background:transparent;
+
+    color:var(--white);
+
+    padding:20px;
+
+    font-family:var(--mono);
+    font-size:13px;
+}
+
+.command-items{
+    padding:8px;
+}
+
+.command-item{
+    width:100%;
+
+    border:0;
+    background:transparent;
+
+    color:var(--muted);
+
+    display:flex;
+    justify-content:space-between;
+
+    padding:13px;
+
+    cursor:pointer;
+
+    font-family:var(--mono);
+    font-size:10px;
+
+    text-align:left;
+}
+
+.command-item:hover{
+    background:rgba(98,230,255,.06);
+    color:var(--white);
+}
+
+.command-key{
+    color:var(--dim);
+}
+
+
+/* =========================================================
+   REVEAL
+========================================================= */
+
+.reveal{
+    opacity:0;
+    transform:translateY(25px);
+
+    transition:
+        opacity .8s ease,
+        transform .8s cubic-bezier(.2,.8,.2,1);
+}
+
+.reveal.visible{
+    opacity:1;
+    transform:translateY(0);
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:1050px){
+
+    .hero-layout{
+        grid-template-columns:1fr;
+    }
+
+    .hero-panel{
+        max-width:650px;
+    }
+
+    .projects-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .credentials-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .archive-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:800px){
+
+    .container,
+    .nav-inner,
+    .footer-inner{
+        width:min(100% - 40px,var(--max));
+    }
+
+    section{
+        padding:90px 0;
+    }
+
+    .nav{
+        height:68px;
+    }
+
+    .nav-links{
+        display:none;
+    }
+
+    .mobile-toggle{
+        display:grid;
+        place-items:center;
+    }
+
+    .nav.mobile-open .nav-links{
+        position:fixed;
+        display:flex;
+        flex-direction:column;
+        align-items:flex-start;
+
+        left:20px;
+        right:20px;
+        top:78px;
+
+        padding:20px;
+
+        background:#090d13;
+        border:1px solid var(--line-strong);
+
+        box-shadow:0 30px 70px rgba(0,0,0,.45);
+    }
+
+    .nav.mobile-open .nav-links a{
+        font-size:11px;
+        padding:10px 0;
+    }
+
+    .hero{
+        padding-top:120px;
+    }
+
+    .hero-title{
+        font-size:clamp(58px,17vw,90px);
+    }
+
+    .quick-inner{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .quick-item:nth-child(2){
+        border-right:0;
+    }
+
+    .quick-item:nth-child(3),
+    .quick-item:nth-child(4){
+        border-top:1px solid var(--line);
+    }
+
+    .about-grid,
+    .research-layout{
+        grid-template-columns:1fr;
+    }
+
+    .research-intro{
+        position:static;
+    }
+
+    .flagship-shell{
+        padding:30px;
+    }
+
+    .flagship-grid{
+        grid-template-columns:1fr;
+    }
+
+    .projects-grid{
+        grid-template-columns:1fr;
+    }
+
+    .live-grid{
+        grid-template-columns:1fr;
+    }
+
+    .skills-layout{
+        grid-template-columns:1fr;
+    }
+
+    .activity-grid{
+        grid-template-columns:1fr;
+    }
+
+    .credentials-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .timeline::before{
+        left:8px;
+    }
+
+    .timeline-item{
+        grid-template-columns:1fr;
+        padding-left:35px;
+        gap:10px;
+    }
+
+    .timeline-date{
+        text-align:left;
+    }
+
+    .timeline-dot{
+        left:3px;
+        top:0;
+    }
+
+    .resume-layout{
+        grid-template-columns:1fr;
+    }
+
+    .resume-actions{
+        flex-direction:row;
+        flex-wrap:wrap;
+    }
+
+    .contact-shell{
+        padding:45px 28px;
+    }
+
+    .archive-grid{
+        grid-template-columns:1fr;
+    }
+
+    .footer-inner{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+}
+
+@media(max-width:500px){
+
+    .hero-actions .btn{
+        width:100%;
+    }
+
+    .quick-inner{
+        grid-template-columns:1fr;
+    }
+
+    .quick-item{
+        border-right:0!important;
+        border-bottom:1px solid var(--line);
+    }
+
+    .quick-item:last-child{
+        border-bottom:0;
+    }
+
+    .credentials-grid{
+        grid-template-columns:1fr;
+    }
+
+    .research-item{
+        grid-template-columns:1fr;
+        gap:10px;
+    }
+
+    .flagship-head{
+        flex-direction:column;
+    }
+
+    .resume-shell{
+        padding:30px;
+    }
+
+    .resume-actions .btn{
+        width:100%;
+    }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media(prefers-reduced-motion:reduce){
+
+    *,
+    *::before,
+    *::after{
+        scroll-behavior:auto!important;
+        animation:none!important;
+        transition:none!important;
+    }
+
+    .reveal{
+        opacity:1;
+        transform:none;
+    }
+
+}
+
 </style>
 </head>
+
+
 <body>
 
-<div class="noise"></div>
-<div class="grid-bg"></div>
+<div class="scroll-progress" id="progress"></div>
 
-<nav id="nav">
-  <a href="#hero" class="nav-logo">YS<span>.dev</span></a>
-  <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#flagship">EdgeDaemon</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#research">Research</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <a href="Yashas_Sadananda_Resume_SWE_Intern-1%20(1).pdf" class="nav-resume" target="_blank">Resume ↓</a>
-  </ul>
+<div class="ambient">
+    <div class="ambient-grid"></div>
+    <div class="orb one"></div>
+    <div class="orb two"></div>
+    <div class="orb three"></div>
+</div>
+
+<div class="noise"></div>
+<div class="cursor-glow" id="cursorGlow"></div>
+
+
+<!-- ======================================================
+     NAVIGATION
+======================================================= -->
+
+<nav class="nav" id="nav">
+
+    <div class="nav-inner">
+
+        <a href="#top" class="logo">
+
+            <span class="logo-mark">YS</span>
+
+            <span class="logo-name">
+                yashas<span>.dev</span>
+            </span>
+
+        </a>
+
+        <ul class="nav-links">
+
+            <li>
+                <a href="#about">About</a>
+            </li>
+
+            <li>
+                <a href="#edge-daemon">EdgeDaemon</a>
+            </li>
+
+            <li>
+                <a href="#projects">Projects</a>
+            </li>
+
+            <!-- NEW -->
+            <li>
+                <a href="#live">Live</a>
+            </li>
+
+            <li>
+                <a href="#research">Research</a>
+            </li>
+
+            <li>
+                <a href="#experience">Experience</a>
+            </li>
+
+            <li>
+                <a href="#skills">Skills</a>
+            </li>
+
+            <!-- NEW -->
+            <li>
+                <a href="#resume">Resume</a>
+            </li>
+
+            <li>
+                <a href="#contact" class="nav-cta">Let's Talk</a>
+            </li>
+
+        </ul>
+
+        <button class="mobile-toggle" id="mobileToggle">
+            ☰
+        </button>
+
+    </div>
+
 </nav>
 
-<section id="hero">
-  <div class="hero-glow"></div>
-  <div class="hero-eyebrow"><span class="dot"></span>AVAILABLE FOR INTERNSHIPS · BENGALURU, INDIA<span class="blink">_</span></div>
-  <h1 class="hero-name">Yashas<br/><span class="last">Sadananda</span></h1>
-  <p class="hero-role">B.Tech CSE @ <b>PES University</b> · Founder-track builder @ <b>PESU Venture Labs</b> · building <b>traceable, auditable AI systems</b> for regulated industries.</p>
-  <p class="hero-desc">I build AI systems that can explain themselves. Currently founding EdgeDaemon — an AI decision-reconstruction and provenance platform — while shipping agentic pipelines, ML research systems, and safety-stack architectures across 10+ hackathons and research programs.</p>
-  <div class="hero-cta">
-    <a href="#flagship" class="btn btn-primary">See EdgeDaemon →</a>
-    <a href="#projects" class="btn btn-ghost">All Projects</a>
-    <a href="https://github.com/yxshas565" target="_blank" class="btn btn-ghost">GitHub ↗</a>
-  </div>
-  <div class="hero-meta">
-    <div class="hero-meta-item"><div class="n">10+</div><div class="hero-meta-label">Hackathons / Programs</div></div>
-    <div class="hero-meta-item"><div class="n">52K+</div><div class="hero-meta-label">Devs outranked (OpenEnv)</div></div>
-    <div class="hero-meta-item"><div class="n">1</div><div class="hero-meta-label">Founder-track startup</div></div>
-    <div class="hero-meta-item"><div class="n">100+</div><div class="hero-meta-label">LeetCode solved</div></div>
-  </div>
+
+<main id="top">
+
+
+<!-- ======================================================
+     HERO
+======================================================= -->
+
+<section class="hero">
+
+    <div class="container hero-layout">
+
+        <div>
+
+            <div class="hero-eyebrow">
+                <span class="status-dot"></span>
+                OPEN TO AI / ML / SWE INTERNSHIPS
+            </div>
+
+            <h1 class="hero-title">
+                Building<br>
+                <span class="gradient">intelligent</span><br>
+                systems.
+            </h1>
+
+            <p class="hero-role">
+                B.Tech CSE @ <strong>PES University</strong>
+                · AI / ML
+                · Agentic Systems
+                · Software Engineering
+                · AI Safety Research
+            </p>
+
+            <p class="hero-description">
+                I build systems where machine learning, software engineering,
+                and research meet — from autonomous ML pipelines and voice
+                agents to internal model monitoring and mechanistic AI safety.
+            </p>
+
+            <div class="hero-actions">
+
+                <a href="#projects" class="btn btn-primary">
+                    Explore the work
+                    <span>↗</span>
+                </a>
+
+                <a href="#edge-daemon" class="btn btn-secondary">
+                    EdgeDaemon
+                    <span>↗</span>
+                </a>
+
+                <a
+                    href="Yashas_Sadananda_Resume.pdf"
+                    target="_blank"
+                    class="btn btn-secondary"
+                >
+                    Resume
+                    <span>↓</span>
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- SYSTEM PANEL -->
+
+        <div class="hero-panel reveal">
+
+            <div class="system-card">
+
+                <div class="system-top">
+
+                    <span class="system-title">
+                        / current_system.status
+                    </span>
+
+                    <span class="system-live">
+                        ● ONLINE
+                    </span>
+
+                </div>
+
+                <div class="system-body">
+
+                    <div class="system-command">
+                        <span>$</span> whoami
+                    </div>
+
+                    <div class="system-name">
+                        Yashas Sadananda
+                    </div>
+
+
+                    <div class="system-flow">
+
+                        <div class="flow-node">
+
+                            <div class="flow-icon">
+                                01
+                            </div>
+
+                            <div>
+                                <div class="flow-main">
+                                    EdgeDaemon
+                                </div>
+
+                                <div class="flow-sub">
+                                    AI safety / provenance
+                                </div>
+                            </div>
+
+                            <div class="flow-status">
+                                ACTIVE
+                            </div>
+
+                        </div>
+
+
+                        <div class="flow-node">
+
+                            <div class="flow-icon">
+                                02
+                            </div>
+
+                            <div>
+                                <div class="flow-main">
+                                    MechGuard
+                                </div>
+
+                                <div class="flow-sub">
+                                    model-internal assurance
+                                </div>
+                            </div>
+
+                            <div class="flow-status">
+                                RESEARCH
+                            </div>
+
+                        </div>
+
+
+                        <div class="flow-node">
+
+                            <div class="flow-icon">
+                                03
+                            </div>
+
+                            <div>
+                                <div class="flow-main">
+                                    Agentic Systems
+                                </div>
+
+                                <div class="flow-sub">
+                                    orchestration / automation
+                                </div>
+                            </div>
+
+                            <div class="flow-status">
+                                SHIPPING
+                            </div>
+
+                        </div>
+
+
+                        <div class="flow-node">
+
+                            <div class="flow-icon">
+                                04
+                            </div>
+
+                            <div>
+                                <div class="flow-main">
+                                    ML Research
+                                </div>
+
+                                <div class="flow-sub">
+                                    CV / forecasting / RL
+                                </div>
+                            </div>
+
+                            <div class="flow-status">
+                                BUILDING
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="system-footer">
+
+                        <span>
+                            Bengaluru, India
+                        </span>
+
+                        <span>
+                            pesu.edu
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
 </section>
+
+
+<!-- ======================================================
+     QUICK STRIP
+======================================================= -->
+
+<div class="quick-strip">
+
+    <div class="container quick-inner">
+
+        <div class="quick-item">
+            <div class="quick-label">Education</div>
+            <div class="quick-value">PES University · CSE</div>
+        </div>
+
+        <div class="quick-item">
+            <div class="quick-label">Focus</div>
+            <div class="quick-value">AI / ML + Systems</div>
+        </div>
+
+        <div class="quick-item">
+            <div class="quick-label">Flagship</div>
+            <div class="quick-value">EdgeDaemon / MechGuard</div>
+        </div>
+
+        <div class="quick-item">
+            <div class="quick-label">Location</div>
+            <div class="quick-value">Bengaluru, India</div>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     ABOUT
+======================================================= -->
 
 <section id="about">
-  <div class="section-tag" data-n="1">about</div>
-  <h2 class="section-title">Who I <span class="hi">Am</span></h2>
-  <div class="about-grid">
-    <div class="about-text reveal">
-      <p>I'm a Computer Science Engineering student at PES University, Bengaluru, working at the intersection of <b>AI safety, agentic systems, and full-stack engineering</b>. Most of my work centers on one question: <span class="highlight">can an AI system explain, after the fact, exactly why it did what it did?</span></p>
-      <p>That question became <b>EdgeDaemon</b>, an AI decision-reconstruction and provenance platform for regulated industries, which I'm building as a Technology Associate through PESU Venture Labs' competitive founder-track ABC program.</p>
-      <p>Outside EdgeDaemon, I've shipped five-agent trading safety stacks, RL-based ML pipeline agents, legal-defense multi-agent systems, and a ResNet18-based crop disease classifier with full inference provenance — across GitLab, Meta × PyTorch, IEEE, and FantomCode hackathons. I'm also a <b>national-level Ice & Inline Hockey athlete</b> representing Karnataka, which is where I actually learned how to perform under pressure as part of a team.</p>
+
+    <div class="container">
+
+        <div class="section-head">
+
+            <div>
+
+                <div class="section-index">
+                    <span>01</span> — ABOUT
+                </div>
+
+                <h2 class="section-title">
+                    More than<br>
+                    <em>just code.</em>
+                </h2>
+
+            </div>
+
+            <p class="section-copy">
+                A systems-oriented computer science student interested in
+                building things that are technically deep, useful, and
+                difficult to fake.
+            </p>
+
+        </div>
+
+
+        <div class="about-grid">
+
+            <div class="about-copy reveal">
+
+                <p>
+                    I'm a Computer Science Engineering student at
+                    <strong>PES University, Bengaluru</strong>, working across
+                    <span class="cyan">AI/ML, agentic systems, backend engineering,
+                    and AI safety research.</span>
+                </p>
+
+                <p>
+                    My work increasingly revolves around a simple question:
+                    what happens when we stop treating AI as a black box and
+                    start building infrastructure around its internal behaviour,
+                    provenance, evaluation, and deployment?
+                </p>
+
+                <p>
+                    That direction led to <strong>EdgeDaemon</strong> and its
+                    research product <strong>MechGuard</strong>, while other
+                    projects explore autonomous ML pipelines, voice agents,
+                    computer vision, forecasting, reinforcement learning,
+                    legal AI, and enterprise systems.
+                </p>
+
+                <p>
+                    I enjoy working at the boundary between
+                    <strong>research and engineering</strong> — taking an idea,
+                    turning it into an experiment, then turning the useful
+                    pieces into software people can actually interact with.
+                </p>
+
+            </div>
+
+
+            <div class="about-side reveal">
+
+                <div class="about-card">
+                    <div class="about-card-label">Degree</div>
+                    <div class="about-card-value">B.Tech Computer Science</div>
+                </div>
+
+                <div class="about-card">
+                    <div class="about-card-label">University</div>
+                    <div class="about-card-value">PES University</div>
+                </div>
+
+                <div class="about-card">
+                    <div class="about-card-label">Current Work</div>
+                    <div class="about-card-value">EdgeDaemon</div>
+                </div>
+
+                <div class="about-card">
+                    <div class="about-card-label">Research</div>
+                    <div class="about-card-value">Mechanistic AI Safety</div>
+                </div>
+
+                <div class="about-card">
+                    <div class="about-card-label">Open Source</div>
+                    <div class="about-card-value">GSSoC · SSoC · Hugging Face</div>
+                </div>
+
+                <div class="about-card">
+                    <div class="about-card-label">Base</div>
+                    <div class="about-card-value">Bengaluru, India</div>
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
-    <div class="stat-grid reveal">
-      <div class="stat-box"><div class="n">10+</div><div class="l">Projects & Research Systems</div></div>
-      <div class="stat-box"><div class="n">6+</div><div class="l">Certifications</div></div>
-      <div class="stat-box"><div class="n">8</div><div class="l">Hackathon Finals / Shortlists</div></div>
-      <div class="stat-box"><div class="n">7.32</div><div class="l">GPA · PES University</div></div>
-    </div>
-  </div>
+
 </section>
 
-<section id="flagship">
-  <div class="section-tag" data-n="2">flagship venture</div>
-  <h2 class="section-title">Building <span class="hi">EdgeDaemon</span></h2>
-  <p class="section-sub">The centerpiece of my current work — an AI decision-reconstruction and provenance platform tackling one of the hardest unsolved problems in enterprise AI: making autonomous decisions auditable after the fact.</p>
 
-  <div class="flagship-card reveal">
-    <div class="flag-top">
-      <span class="flag-badge">PESU VENTURE LABS · ABC 2026</span>
-      <span class="flag-status">MAY 2026 — PRESENT</span>
+<!-- ======================================================
+     EDGE DAEMON / MECHGUARD
+======================================================= -->
+
+<section id="edge-daemon" class="flagship">
+
+    <div class="container">
+
+        <div class="section-head">
+
+            <div>
+
+                <div class="section-index">
+                    <span>02</span> — FLAGSHIP
+                </div>
+
+                <h2 class="section-title">
+                    The work I care<br>
+                    about <em>most.</em>
+                </h2>
+
+            </div>
+
+            <p class="section-copy">
+                A venture and research direction exploring internal evidence
+                for AI assurance — from model development through deployment.
+            </p>
+
+        </div>
+
+
+        <div class="flagship-shell reveal">
+
+            <div class="flagship-head">
+
+                <div class="flagship-label">
+                    EDGE DAEMON · MECHGUARD
+                </div>
+
+                <div class="flagship-status">
+                    ● ACTIVE RESEARCH
+                </div>
+
+            </div>
+
+
+            <h3 class="flagship-title">
+                Edge<span>Daemon</span>
+            </h3>
+
+
+            <p class="flagship-description">
+
+                EdgeDaemon is the venture I am building around
+                <strong>AI decision provenance, internal assurance, and
+                safety infrastructure.</strong>
+
+                Its current research product, <strong>MechGuard</strong>,
+                investigates whether internal model evidence can complement
+                conventional AI observability — from weight-space changes
+                during fine-tuning to activation signals during deployment.
+
+            </p>
+
+
+            <div class="flagship-grid">
+
+
+                <div class="flag-card">
+
+                    <div class="flag-card-label">
+                        PRODUCT
+                    </div>
+
+                    <h3>
+                        MechGuard
+                    </h3>
+
+                    <p>
+                        Internal assurance for AI systems — measuring internal
+                        signals, preserving provenance, and surfacing evidence
+                        for safety and security investigation.
+                    </p>
+
+                </div>
+
+
+                <div class="flag-card">
+
+                    <div class="flag-card-label">
+                        ATTEST
+                    </div>
+
+                    <h3>
+                        Training-time evidence
+                    </h3>
+
+                    <p>
+                        LoRA weight-difference analysis, SVD, singular-value
+                        trajectories, subspace analysis, and checkpoint-level
+                        monitoring during fine-tuning.
+                    </p>
+
+                </div>
+
+
+                <div class="flag-card">
+
+                    <div class="flag-card-label">
+                        WATCH
+                    </div>
+
+                    <h3>
+                        Deployment-time signals
+                    </h3>
+
+                    <p>
+                        Residual-stream activations, probes, cross-agent
+                        aggregation, activation alignment, and robustness
+                        evaluation for multi-agent systems.
+                    </p>
+
+                </div>
+
+
+                <div class="flag-card">
+
+                    <div class="flag-card-label">
+                        RESEARCH
+                    </div>
+
+                    <h3>
+                        Lifecycle assurance
+                    </h3>
+
+                    <p>
+                        The longer-term hypothesis connects training-time
+                        internal evidence with downstream deployment risk
+                        through model lineage and longitudinal evidence.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="flag-stack">
+
+                <span class="tech">Python</span>
+                <span class="tech">PyTorch</span>
+                <span class="tech">Transformers</span>
+                <span class="tech">PEFT / LoRA</span>
+                <span class="tech">SVD</span>
+                <span class="tech">Activation Probing</span>
+                <span class="tech">Streamlit</span>
+                <span class="tech">Research Infrastructure</span>
+
+            </div>
+
+
+            <div style="margin-top:30px;display:flex;gap:10px;flex-wrap:wrap;">
+
+                <a
+                    class="btn btn-secondary"
+                    href="https://github.com/yxshas565/mechguard"
+                    target="_blank"
+                    rel="noopener"
+                >
+                    MechGuard GitHub ↗
+                </a>
+
+                <a
+                    class="btn btn-secondary"
+                    href="https://mechguard-site.vercel.app/"
+                    target="_blank"
+                    rel="noopener"
+                >
+                    Prototype ↗
+                </a>
+
+                <a
+                    class="btn btn-secondary"
+                    href="https://miro.com/app/board/uXjVHvOi1Zw=/?share_link_id=76257699602"
+                    target="_blank"
+                    rel="noopener"
+                >
+                    Research Board ↗
+                </a>
+
+            </div>
+
+        </div>
+
     </div>
-    <div class="flag-title">EdgeDaemon</div>
-    <p class="flag-desc">An <b>AI decision-reconstruction and provenance platform</b> for regulated industries — healthcare, legal, and finance — where every model decision needs to be explainable, traceable, and defensible after the fact. Selected for PESU Venture Labs' <b>Accelerating Bold Concepts</b> program, a competitive founder-track incubation cohort, and pivoted the technical thesis from on-device continual AI personalization to decision-provenance after structured customer discovery surfaced systemic traceability failures across enterprise AI pipelines.</p>
-    <div class="flag-points">
-      <div class="flag-point">Architected the <b>Retain Score</b> — a proprietary compliance-grade benchmark quantifying catastrophic forgetting and model drift, positioning EdgeDaemon in a structurally underserved market quadrant</div>
-      <div class="flag-point">Validated through AML analyst stakeholder mapping, vendor landscape analysis, and forensic case studies (TD Bank's $3B AML enforcement, Dutch Benefits Scandal)</div>
-      <div class="flag-point">Produced regulatory landscape mapping across GDPR, SOC 2, and MAS TRM frameworks to anchor the beachhead market thesis</div>
-      <div class="flag-point">Built investor-facing pitch materials, Miro stakeholder ecosystem maps, and a full go-to-market strategy for cohort review</div>
-      <div class="flag-point">Led full-stack prototyping across React, FastAPI/Node.js, and LLM-powered agentic pipelines</div>
-      <div class="flag-point">Featured as centerpiece across AI safety fellowship applications, including Singapore AI Safety Fellowship</div>
-    </div>
-    <div class="flag-stack">
-      <span class="flag-tag">React</span><span class="flag-tag">FastAPI</span><span class="flag-tag">Node.js</span>
-      <span class="flag-tag">LLM Agents</span><span class="flag-tag">Provenance Systems</span><span class="flag-tag">Regulatory Design</span>
-    </div>
-  </div>
+
 </section>
+
+
+<!-- ======================================================
+     PROJECTS
+======================================================= -->
 
 <section id="projects">
-  <div class="section-tag" data-n="3">projects</div>
-  <h2 class="section-title">Research & <span class="hi">Builds</span></h2>
-  <p class="section-sub">Every project here is built around the same throughline — making agentic AI systems observable, constrained, and auditable, not black boxes.</p>
 
-  <div class="projects-grid">
+    <div class="container">
 
-    <a href="https://github.com/yxshas565" target="_blank" class="project-card reveal">
-      <div class="project-top"><span class="project-tag">Fintech · Agentic AI</span><span class="project-badge">TEAM LEAD</span></div>
-      <div class="project-name">AutoTrade AI</div>
-      <div class="project-desc">Six-layer agentic trading architecture with a 30s perceive-reason-decide-execute-self-correct loop and multi-broker integration (Zerodha, Upstox, Angel One). Led Team SynapseX for IEEE YESIST12 2026.</div>
-      <div class="project-metric">▸ 5-layer safety stack: confidence gating, hard constraints, circuit breakers, 2FA consent, immutable audit trail</div>
-      <div class="project-stack"><span class="stack-tag">Python</span><span class="stack-tag">FastAPI</span><span class="stack-tag">XGBoost</span><span class="stack-tag">LSTM</span><span class="stack-tag">Kafka</span><span class="stack-tag">Redis</span></div>
-      <span class="project-link">View on GitHub</span>
-    </a>
+        <div class="section-head">
 
-    <a href="https://github.com/yxshas565" target="_blank" class="project-card reveal">
-      <div class="project-top"><span class="project-tag">Multi-Agent · Legal AI</span><span class="project-badge">R2 FINALIST</span></div>
-      <div class="project-name">Jurify</div>
-      <div class="project-desc">Multi-agent legal research and defense pipeline with citation-traced reasoning chains — every argument is traceable back to source documents. FantomCode 2026, Round 2 Finalist.</div>
-      <div class="project-metric">▸ On-device confidentiality isolation with selective memory purging for privileged documents</div>
-      <div class="project-stack"><span class="stack-tag">LangGraph</span><span class="stack-tag">Claude API</span><span class="stack-tag">FastAPI</span></div>
-      <span class="project-link">View on GitHub</span>
-    </a>
+            <div>
 
-    <a href="https://github.com/yxshas565" target="_blank" class="project-card reveal">
-      <div class="project-top"><span class="project-tag">MLOps · Agentic Pipelines</span><span class="project-badge">GITLAB AI</span></div>
-      <div class="project-name">ML Pipeline Orchestration Agent</div>
-      <div class="project-desc">5-agent autonomous ML pipeline (Trigger → Dataset Analyst → Strategist → Code Generator → Reporter) with zero manual intervention. Typed LangGraph state graphs with structured JSON observability.</div>
-      <div class="project-metric">▸ F1 = 0.7616 · ROC-AUC = 0.8454 · 131 automated tests passing</div>
-      <div class="project-stack"><span class="stack-tag">LangGraph</span><span class="stack-tag">Claude Sonnet</span><span class="stack-tag">Docker</span><span class="stack-tag">GitLab CI/CD</span></div>
-      <span class="project-link">View on GitHub</span>
-    </a>
+                <div class="section-index">
+                    <span>03</span> — SELECTED WORK
+                </div>
 
-    <a href="https://github.com/yxshas565" target="_blank" class="project-card reveal">
-      <div class="project-top"><span class="project-tag">Reinforcement Learning</span><span class="project-badge">TOP SHORTLIST</span></div>
-      <div class="project-name">ML Pipeline Agent — OpenEnv</div>
-      <div class="project-desc">RL-based pipeline agent (preprocessing, model selection, hyperparameter optimization) using Q-learning with epsilon-greedy exploration. Meta × PyTorch Hackathon.</div>
-      <div class="project-metric">▸ Shortlisted from 52,000+ developers to the offline finale</div>
-      <div class="project-stack"><span class="stack-tag">Q-Learning</span><span class="stack-tag">Pydantic</span><span class="stack-tag">Docker</span><span class="stack-tag">HuggingFace</span></div>
-      <span class="project-link">View on GitHub</span>
-    </a>
+                <h2 class="section-title">
+                    Things I've<br>
+                    <em>built.</em>
+                </h2>
 
-    <a href="https://github.com/yxshas565/milletdatanet" target="_blank" class="project-card reveal">
-      <div class="project-top"><span class="project-tag">ML Research · Provenance</span><span class="project-badge">FEATURED</span></div>
-      <div class="project-name">MilletDataNet</div>
-      <div class="project-desc">End-to-end ML research system for millet leaf disease classification — fine-tuned ResNet18 with k-fold cross-validation, class rebalancing, and a full inference provenance service.</div>
-      <div class="project-metric">▸ Macro-F1: 0.9196 · FastAPI provenance layer · React dashboard · simulated MQTT IoT layer</div>
-      <div class="project-stack"><span class="stack-tag">PyTorch</span><span class="stack-tag">ResNet18</span><span class="stack-tag">FastAPI</span><span class="stack-tag">React</span><span class="stack-tag">MQTT</span></div>
-      <span class="project-link">View on GitHub</span>
-    </a>
+            </div>
 
-    <a href="https://github.com/yxshas565" target="_blank" class="project-card reveal">
-      <div class="project-top"><span class="project-tag">Cognee · Memory Systems</span><span class="project-badge">PR MERGED</span></div>
-      <div class="project-name">AuditMind</div>
-      <div class="project-desc">Forensic audit system reconstructing complete decision histories for regulated-industry AI. Uses Cognee's hybrid graph-vector memory to capture every reasoning step across multi-turn agent workflows.</div>
-      <div class="project-metric">▸ Tamper-evident provenance chains · submitted PR to topoteretes/cognee</div>
-      <div class="project-stack"><span class="stack-tag">Cognee</span><span class="stack-tag">LangGraph</span><span class="stack-tag">FastAPI</span><span class="stack-tag">D3.js</span></div>
-      <span class="project-link">View on GitHub</span>
-    </a>
+            <p class="section-copy">
+                A broader view than the resume — production-oriented systems,
+                research prototypes, hackathon builds, experiments, and
+                engineering work.
+            </p>
 
-    <a href="https://github.com/yxshas565/AssetFlow-YashasSadananda-EdgeDaemon" target="_blank" class="project-card reveal">
-      <div class="project-top"><span class="project-tag">Full Stack · Enterprise</span><span class="project-badge">SOLO BUILD</span></div>
-      <div class="project-name">AssetFlow</div>
-      <div class="project-desc">Enterprise Asset & Resource Management System built solo for the Odoo Hackathon 2026 virtual round — full auth, migrations, and containerized deployment from scratch.</div>
-      <div class="project-metric">▸ FastAPI + PostgreSQL 16 + SQLAlchemy 2.0 + Alembic + React/Vite + Docker Compose</div>
-      <div class="project-stack"><span class="stack-tag">FastAPI</span><span class="stack-tag">PostgreSQL</span><span class="stack-tag">React/Vite</span><span class="stack-tag">Docker</span><span class="stack-tag">JWT</span></div>
-      <span class="project-link">View on GitHub</span>
-    </a>
+        </div>
 
-    <a href="https://github.com/yxshas565" target="_blank" class="project-card reveal">
-      <div class="project-top"><span class="project-tag">Fraud Detection · Graph AI</span><span class="project-badge">HACKATHON</span></div>
-      <div class="project-name">SENTINEL</div>
-      <div class="project-desc">Graph-based agentic fraud detection system built for the iDEA 2.0 / Union Bank hackathon, modeling transaction networks to surface anomalous behavior.</div>
-      <div class="project-stack"><span class="stack-tag">Python</span><span class="stack-tag">Graph ML</span><span class="stack-tag">Agentic AI</span></div>
-      <span class="project-link">View on GitHub</span>
-    </a>
 
-    <a href="https://github.com/yxshas565" target="_blank" class="project-card reveal">
-      <div class="project-top"><span class="project-tag">TypeScript · Research Agents</span><span class="project-badge">MOST STARRED</span></div>
-      <div class="project-name">NEXUS</div>
-      <div class="project-desc">Multi-agent research orchestration engine with streaming execution, adaptive semantic memory, and a parallel web search → analysis → structured report pipeline.</div>
-      <div class="project-metric">▸ Explicit memory lifecycle controls — what's stored, retrieved, and forgotten is policy-governed, not implicit</div>
-      <div class="project-stack"><span class="stack-tag">TypeScript</span><span class="stack-tag">LangChain</span><span class="stack-tag">OpenAI API</span></div>
-      <span class="project-link">View on GitHub</span>
-    </a>
+        <div class="project-toolbar">
 
-    <a href="https://github.com/yxshas565" target="_blank" class="project-card reveal">
-      <div class="project-top"><span class="project-tag">FastAPI · LangGraph</span><span class="project-badge">PM ACCELERATOR</span></div>
-      <div class="project-name">Weather Risk Assistant</div>
-      <div class="project-desc">FastAPI + LangGraph + React weather risk assistant deployed on Vercel, paired with a GradientBoosting per-location forecasting pipeline and SHAP explainability layer.</div>
-      <div class="project-stack"><span class="stack-tag">LangGraph</span><span class="stack-tag">GradientBoosting</span><span class="stack-tag">SHAP</span><span class="stack-tag">Streamlit</span></div>
-      <span class="project-link">View on GitHub</span>
-    </a>
+            <div class="filters">
 
-  </div>
+                <button class="filter active" data-filter="all">
+                    ALL
+                </button>
+
+                <button class="filter" data-filter="ai">
+                    AI / AGENTS
+                </button>
+
+                <button class="filter" data-filter="ml">
+                    ML
+                </button>
+
+                <button class="filter" data-filter="software">
+                    SOFTWARE
+                </button>
+
+                <button class="filter" data-filter="research">
+                    RESEARCH
+                </button>
+
+            </div>
+
+            <div class="project-count" id="projectCount">
+                SHOWING 10 PROJECTS
+            </div>
+
+        </div>
+
+
+        <div class="projects-grid">
+
+
+            <article class="project reveal" data-category="ai research">
+
+                <div class="project-top">
+                    <span class="project-number">01</span>
+                    <span class="project-type">AI SAFETY</span>
+                </div>
+
+                <h3>MechGuard</h3>
+
+                <p class="project-description">
+                    Research-driven internal assurance system investigating
+                    model-internal evidence across fine-tuning and deployment.
+                    Built under EdgeDaemon.
+                </p>
+
+                <div class="project-bottom">
+
+                    <div class="project-stack">
+                        <span>PyTorch</span>
+                        <span>Transformers</span>
+                        <span>LoRA</span>
+                        <span>SVD</span>
+                    </div>
+
+                    <a
+                        href="https://github.com/yxshas565/mechguard"
+                        target="_blank"
+                        rel="noopener"
+                        class="project-link"
+                    >
+                        <span>VIEW REPOSITORY</span>
+                        <span>↗</span>
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <article class="project reveal" data-category="ai software">
+
+                <div class="project-top">
+                    <span class="project-number">02</span>
+                    <span class="project-type">VOICE AI</span>
+                </div>
+
+                <h3>Sunrise AI Voice Agent</h3>
+
+                <p class="project-description">
+                    Full-stack voice AI system being productionised for
+                    outbound calling, multilingual lead qualification,
+                    structured extraction, webhooks, and operational
+                    dashboards.
+                </p>
+
+                <div class="project-bottom">
+
+                    <div class="project-stack">
+                        <span>Next.js</span>
+                        <span>FastAPI</span>
+                        <span>Exotel</span>
+                        <span>SQLite</span>
+                    </div>
+
+                    <a
+                        href="https://github.com/yxshas565/sunrise-ai-voice-agent"
+                        target="_blank"
+                        rel="noopener"
+                        class="project-link"
+                    >
+                        <span>VIEW REPOSITORY</span>
+                        <span>↗</span>
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <article class="project reveal" data-category="ai ml software">
+
+                <div class="project-top">
+                    <span class="project-number">03</span>
+                    <span class="project-type">AGENTIC ML</span>
+                </div>
+
+                <h3>Autonomous ML Pipeline Agent</h3>
+
+                <p class="project-description">
+                    Multi-agent ML workflow connecting issue interpretation,
+                    dataset analysis, strategy generation, code generation,
+                    execution, testing, and reporting through typed
+                    orchestration.
+                </p>
+
+                <div class="project-bottom">
+
+                    <div class="project-stack">
+                        <span>LangGraph</span>
+                        <span>Claude</span>
+                        <span>XGBoost</span>
+                        <span>GitLab CI</span>
+                    </div>
+
+                    <a
+                        href="https://github.com/yxshas565/ml-pipeline-orchestrator-agent"
+                        target="_blank"
+                        rel="noopener"
+                        class="project-link"
+                    >
+                        <span>VIEW REPOSITORY</span>
+                        <span>↗</span>
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <article class="project reveal" data-category="ml research">
+
+                <div class="project-top">
+                    <span class="project-number">04</span>
+                    <span class="project-type">DATA SCIENCE</span>
+                </div>
+
+                <h3>Weather Risk Forecasting</h3>
+
+                <p class="project-description">
+                    Location-aware weather forecasting and risk-analysis
+                    system combining feature engineering, multi-horizon
+                    prediction, uncertainty analysis, and interactive
+                    visualisation.
+                </p>
+
+                <div class="project-bottom">
+
+                    <div class="project-stack">
+                        <span>Python</span>
+                        <span>Pandas</span>
+                        <span>scikit-learn</span>
+                        <span>Streamlit</span>
+                    </div>
+
+                    <a
+                        href="https://github.com/yxshas565/weather-risk-forecasting"
+                        target="_blank"
+                        rel="noopener"
+                        class="project-link"
+                    >
+                        <span>VIEW REPOSITORY</span>
+                        <span>↗</span>
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <article class="project reveal" data-category="ml software">
+
+                <div class="project-top">
+                    <span class="project-number">05</span>
+                    <span class="project-type">COMPUTER VISION</span>
+                </div>
+
+                <h3>MilletDataNet</h3>
+
+                <p class="project-description">
+                    End-to-end crop disease classification system using a
+                    fine-tuned ResNet18 pipeline with inference provenance,
+                    API services, frontend visualisation, and simulated IoT
+                    data flow.
+                </p>
+
+                <div class="project-bottom">
+
+                    <div class="project-stack">
+                        <span>PyTorch</span>
+                        <span>ResNet18</span>
+                        <span>FastAPI</span>
+                        <span>React</span>
+                        <span>MQTT</span>
+                    </div>
+
+                    <a
+                        href="https://github.com/yxshas565/milletdatanet"
+                        target="_blank"
+                        rel="noopener"
+                        class="project-link"
+                    >
+                        <span>VIEW REPOSITORY</span>
+                        <span>↗</span>
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <article class="project reveal" data-category="ai ml research">
+
+                <div class="project-top">
+                    <span class="project-number">06</span>
+                    <span class="project-type">REINFORCEMENT LEARNING</span>
+                </div>
+
+                <h3>ML Pipeline Agent — OpenEnv</h3>
+
+                <p class="project-description">
+                    Reinforcement-learning environment framing ML pipeline
+                    design as a sequential decision problem across
+                    preprocessing, model selection, tuning, and debugging.
+                </p>
+
+                <div class="project-bottom">
+
+                    <div class="project-stack">
+                        <span>Q-Learning</span>
+                        <span>OpenEnv</span>
+                        <span>Python</span>
+                        <span>Docker</span>
+                    </div>
+
+                    <a
+                        href="https://github.com/yxshas565/ml-pipeline-agent-rl"
+                        target="_blank"
+                        rel="noopener"
+                        class="project-link"
+                    >
+                        <span>VIEW REPOSITORY</span>
+                        <span>↗</span>
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <article class="project reveal" data-category="software ai">
+
+                <div class="project-top">
+                    <span class="project-number">07</span>
+                    <span class="project-type">ENTERPRISE SYSTEMS</span>
+                </div>
+
+                <h3>AssetFlow</h3>
+
+                <p class="project-description">
+                    Enterprise asset and resource management application
+                    built around authentication, relational data modelling,
+                    migrations, APIs, frontend workflows, and containerised
+                    deployment.
+                </p>
+
+                <div class="project-bottom">
+
+                    <div class="project-stack">
+                        <span>FastAPI</span>
+                        <span>PostgreSQL</span>
+                        <span>React</span>
+                        <span>Docker</span>
+                    </div>
+
+                    <a
+                        href="https://github.com/yxshas565/AssetFlow-YashasSadananda-EdgeDaemon"
+                        target="_blank"
+                        rel="noopener"
+                        class="project-link"
+                    >
+                        <span>VIEW REPOSITORY</span>
+                        <span>↗</span>
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <article class="project reveal" data-category="ai research">
+
+                <div class="project-top">
+                    <span class="project-number">08</span>
+                    <span class="project-type">MEMORY / AGENTS</span>
+                </div>
+
+                <h3>AuditMind</h3>
+
+                <p class="project-description">
+                    Forensic audit system reconstructing decision histories
+                    for regulated-industry AI using graph-vector memory and
+                    provenance-oriented agent workflows.
+                </p>
+
+                <div class="project-bottom">
+
+                    <div class="project-stack">
+                        <span>Cognee</span>
+                        <span>LangGraph</span>
+                        <span>FastAPI</span>
+                        <span>D3.js</span>
+                    </div>
+
+                    <a
+                        href="https://github.com/yxshas565"
+                        target="_blank"
+                        rel="noopener"
+                        class="project-link"
+                    >
+                        <span>GITHUB PROFILE</span>
+                        <span>↗</span>
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <article class="project reveal" data-category="ai software">
+
+                <div class="project-top">
+                    <span class="project-number">09</span>
+                    <span class="project-type">AGENTIC RESEARCH</span>
+                </div>
+
+                <h3>NEXUS</h3>
+
+                <p class="project-description">
+                    Multi-agent research orchestration concept combining
+                    streaming execution, semantic memory, web research,
+                    parallel analysis, and structured report generation.
+                </p>
+
+                <div class="project-bottom">
+
+                    <div class="project-stack">
+                        <span>TypeScript</span>
+                        <span>LangChain</span>
+                        <span>LLMs</span>
+                    </div>
+
+                    <a
+                        href="https://github.com/yxshas565"
+                        target="_blank"
+                        rel="noopener"
+                        class="project-link"
+                    >
+                        <span>GITHUB PROFILE</span>
+                        <span>↗</span>
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <article class="project reveal" data-category="ai software">
+
+                <div class="project-top">
+                    <span class="project-number">10</span>
+                    <span class="project-type">AI / FULL STACK</span>
+                </div>
+
+                <h3>Edge-Daemon</h3>
+
+                <p class="project-description">
+                    On-device continual-learning and safety-constrained AI
+                    framework exploring quantisation, LoRA adaptation,
+                    safety interfaces, and lightweight API infrastructure.
+                </p>
+
+                <div class="project-bottom">
+
+                    <div class="project-stack">
+                        <span>Python</span>
+                        <span>LoRA</span>
+                        <span>FastAPI</span>
+                        <span>AI Safety</span>
+                    </div>
+
+                    <a
+                        href="https://github.com/yxshas565/Edge-Daemon"
+                        target="_blank"
+                        rel="noopener"
+                        class="project-link"
+                    >
+                        <span>VIEW REPOSITORY</span>
+                        <span>↗</span>
+                    </a>
+
+                </div>
+
+            </article>
+
+
+        </div>
+
+    </div>
+
 </section>
+
+
+<!-- ======================================================
+     NEW — LIVE / DEPLOYED
+======================================================= -->
+
+<section id="live" class="live-section">
+
+    <div class="container">
+
+        <div class="section-head">
+
+            <div>
+
+                <div class="section-index">
+                    <span>04</span> — LIVE / DEPLOYED
+                </div>
+
+                <h2 class="section-title">
+                    Things you can<br>
+                    <em>actually open.</em>
+                </h2>
+
+            </div>
+
+            <p class="section-copy">
+                Not everything I build lives behind a GitHub repository.
+                These are deployed interfaces, applications, and prototypes
+                that can be explored directly.
+            </p>
+
+        </div>
+
+
+        <p class="live-intro reveal">
+            A separate layer of the portfolio for work that has crossed the
+            boundary from codebase to something people can interact with.
+        </p>
+
+
+        <div class="live-grid">
+
+
+            <!-- WEATHER -->
+
+            <article class="live-card primary-live reveal">
+
+                <div class="live-top">
+
+                    <div class="live-status">
+                        <span class="live-dot"></span>
+                        DEPLOYED
+                    </div>
+
+                    <div class="live-type">
+                        ML / WEB APP
+                    </div>
+
+                </div>
+
+                <h3>
+                    Weather Risk Forecasting
+                </h3>
+
+                <p>
+                    Fully deployed weather forecasting and risk-analysis
+                    application combining the underlying ML pipeline with
+                    an interactive web interface.
+                </p>
+
+                <div class="live-url">
+                    weather-risk-app-tau.vercel.app
+                </div>
+
+                <div class="live-actions">
+
+                    <a
+                        href="https://weather-risk-app-tau.vercel.app/"
+                        target="_blank"
+                        rel="noopener"
+                        class="live-action"
+                    >
+                        Launch Application ↗
+                    </a>
+
+                    <a
+                        href="https://github.com/yxshas565/weather-risk-forecasting"
+                        target="_blank"
+                        rel="noopener"
+                        class="live-action"
+                    >
+                        GitHub ↗
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <!-- COFFEE -->
+
+            <article class="live-card reveal">
+
+                <div class="live-top">
+
+                    <div class="live-status">
+                        <span class="live-dot"></span>
+                        DEPLOYED
+                    </div>
+
+                    <div class="live-type">
+                        FRONTEND
+                    </div>
+
+                </div>
+
+                <h3>
+                    Coffee Landing Page
+                </h3>
+
+                <p>
+                    Handcrafted frontend project deployed through GitHub Pages,
+                    focused on visual composition, responsive layout,
+                    typography, and polished presentation.
+                </p>
+
+                <div class="live-url">
+                    yxshas565.github.io/coffee-landing-page/
+                </div>
+
+                <div class="live-actions">
+
+                    <a
+                        href="https://yxshas565.github.io/coffee-landing-page/"
+                        target="_blank"
+                        rel="noopener"
+                        class="live-action"
+                    >
+                        Open Live Site ↗
+                    </a>
+
+                    <a
+                        href="https://github.com/yxshas565/coffee-landing-page"
+                        target="_blank"
+                        rel="noopener"
+                        class="live-action"
+                    >
+                        GitHub ↗
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <!-- ARTISTRY -->
+
+            <article class="live-card reveal">
+
+                <div class="live-top">
+
+                    <div class="live-status">
+                        <span class="live-dot"></span>
+                        DEPLOYED
+                    </div>
+
+                    <div class="live-type">
+                        FRONTEND
+                    </div>
+
+                </div>
+
+                <h3>
+                    Artistry Landing Page
+                </h3>
+
+                <p>
+                    Visual frontend build deployed on GitHub Pages, exploring
+                    typography, composition, responsive design, and
+                    product-style web presentation.
+                </p>
+
+                <div class="live-url">
+                    yxshas565.github.io/artistry-landing-page/
+                </div>
+
+                <div class="live-actions">
+
+                    <a
+                        href="https://yxshas565.github.io/artistry-landing-page/"
+                        target="_blank"
+                        rel="noopener"
+                        class="live-action"
+                    >
+                        Open Live Site ↗
+                    </a>
+
+                    <a
+                        href="https://github.com/yxshas565/artistry-landing-page"
+                        target="_blank"
+                        rel="noopener"
+                        class="live-action"
+                    >
+                        GitHub ↗
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <!-- MECHGUARD -->
+
+            <article class="live-card research-live reveal">
+
+                <div class="live-top">
+
+                    <div class="live-status">
+                        <span class="live-dot"></span>
+                        PROTOTYPE
+                    </div>
+
+                    <div class="live-type">
+                        AI SAFETY
+                    </div>
+
+                </div>
+
+                <h3>
+                    MechGuard Dashboard
+                </h3>
+
+                <p>
+                    Separate prototype / presentation dashboard for the
+                    MechGuard research system, providing a visual layer over
+                    the model-internal assurance concept.
+                </p>
+
+                <div class="live-url">
+                    MechGuard prototype / dashboard
+                </div>
+
+                <div class="live-actions">
+
+                    <a
+                        href="https://mechguard-site.vercel.app/"
+                        target="_blank"
+                        rel="noopener"
+                        class="live-action"
+                    >
+                        Open Prototype ↗
+                    </a>
+
+                    <a
+                        href="https://github.com/yxshas565/mechguard"
+                        target="_blank"
+                        rel="noopener"
+                        class="live-action"
+                    >
+                        GitHub ↗
+                    </a>
+
+                </div>
+
+            </article>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     RESEARCH
+======================================================= -->
 
 <section id="research">
-  <div class="section-tag" data-n="4">research direction</div>
-  <h2 class="section-title">Deep Neural Safety & <span class="hi">Interpretability</span></h2>
-  <div class="research-box reveal">
-    <p class="research-line">Actively researching how language models <b>internally</b> generate responses — moving below the behavioral surface to understand the exact mechanisms: how specific attention heads, MLP layers, and activation circuits produce particular outputs, and what structures correspond to reasoning, memory, and decision-making.</p>
-    <p class="research-line">Motivated by observed alignment failures — autonomous agents developing <b>emergent covert communication</b> between sub-agents, taking untracked actions, and exhibiting goal-directed behavior that bypasses intended constraints. Behavioral-interface safety alone isn't enough.</p>
-    <p class="research-line">Goal: develop formal <b>traceback methods</b> for AI decisions at the weight/activation level — extracting a precise, mechanistic account of why a model produced a specific output, enabling proactive safety guarantees instead of post-hoc behavioral observation.</p>
-    <p class="research-line">Building toward a graduate research thesis on low-level neural safety infrastructure — interpretability tooling, activation auditing, and formal provenance systems operating at the model-internals layer, not just the output layer.</p>
-  </div>
 
-  <div style="margin-top:64px;">
-    <div class="section-tag" data-n="5">trajectory</div>
-    <div class="timeline reveal">
-      <div class="tl-item">
-        <div class="tl-date">MAY 2026 — PRESENT</div>
-        <div class="tl-title">Technology Associate Intern, PESU Venture Labs (ABC Program)</div>
-        <div class="tl-desc">Founder-track incubation cohort. Building EdgeDaemon end-to-end — thesis, GTM, and product.</div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-date">JUN 2026</div>
-        <div class="tl-title">AuditMind — WeMakeDevs × Cognee Hackathon</div>
-        <div class="tl-desc">Built a traceable decision-trail reconstructor; PR submitted to the Cognee open-source repo.</div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-date">APR – MAY 2026</div>
-        <div class="tl-title">ML Pipeline Agent — Meta × PyTorch OpenEnv Hackathon</div>
-        <div class="tl-desc">Shortlisted to the offline finale from 52,000+ developers worldwide.</div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-date">APR 2026</div>
-        <div class="tl-title">AutoTrade AI — IEEE YESIST12 & Jurify — FantomCode Round 2</div>
-        <div class="tl-desc">Led a 6-layer trading safety architecture; built a multi-agent legal defense pipeline as a Round 2 Finalist.</div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-date">MAR 2026</div>
-        <div class="tl-title">ML Pipeline Orchestration Agent — GitLab AI Hackathon</div>
-        <div class="tl-desc">5-agent autonomous pipeline, F1 = 0.7616, fully observable via typed LangGraph state.</div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-date">JAN 2026</div>
-        <div class="tl-title">NEXUS — Personal Research Project</div>
-        <div class="tl-desc">Multi-agent research orchestration engine; became the most-starred repo on my GitHub.</div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-date">EARLY 2026</div>
-        <div class="tl-title">Began AI/ML journey</div>
-        <div class="tl-desc">Transitioned from full-stack/MERN development into serious AI and agentic systems work.</div>
-      </div>
+    <div class="container">
+
+        <div class="section-head">
+
+            <div>
+
+                <div class="section-index">
+                    <span>05</span> — RESEARCH
+                </div>
+
+                <h2 class="section-title">
+                    Below the<br>
+                    <em>interface.</em>
+                </h2>
+
+            </div>
+
+            <p class="section-copy">
+                My research direction is increasingly focused on understanding
+                and monitoring AI systems below the input/output boundary.
+            </p>
+
+        </div>
+
+
+        <div class="research-layout">
+
+
+            <div class="research-intro reveal">
+
+                <div class="research-kicker">
+                    CURRENT DIRECTION
+                </div>
+
+                <h3>
+                    Mechanistic AI
+                    Safety & Interpretability
+                </h3>
+
+                <p>
+                    The long-term goal is not to claim that we can
+                    "read model thoughts", but to build better evidence
+                    around what changes inside models and how those changes
+                    relate to downstream behaviour.
+                </p>
+
+            </div>
+
+
+            <div class="research-items">
+
+
+                <div class="research-item reveal">
+
+                    <div class="research-index">
+                        RQ01
+                    </div>
+
+                    <div>
+
+                        <h4>
+                            Training-time internal evidence
+                        </h4>
+
+                        <p>
+                            Investigating whether parameter and representation
+                            geometry changes systematically during fine-tuning
+                            regimes associated with problematic behaviour.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="research-item reveal">
+
+                    <div class="research-index">
+                        RQ02
+                    </div>
+
+                    <div>
+
+                        <h4>
+                            Deployment-time representation monitoring
+                        </h4>
+
+                        <p>
+                            Exploring activation extraction, probes,
+                            cross-agent aggregation, alignment analysis,
+                            and robustness testing for multi-agent systems.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="research-item reveal">
+
+                    <div class="research-index">
+                        RQ03
+                    </div>
+
+                    <div>
+
+                        <h4>
+                            The lifecycle bridge
+                        </h4>
+
+                        <p>
+                            Studying whether training-time internal evidence
+                            can eventually provide useful information about
+                            downstream deployment risk.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="research-item reveal">
+
+                    <div class="research-index">
+                        A001
+                    </div>
+
+                    <div>
+
+                        <h4>
+                            MechGuard training-time pilot
+                        </h4>
+
+                        <p>
+                            The completed pilot validates the measurement
+                            pipeline and demonstrates substantial internal
+                            geometric movement while leaving the predictive
+                            relationship to emergent misalignment as an
+                            open research question.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
     </div>
-  </div>
+
 </section>
+
+
+<!-- ======================================================
+     EXPERIENCE
+======================================================= -->
+
+<section id="experience" class="experience">
+
+    <div class="container">
+
+        <div class="section-head">
+
+            <div>
+
+                <div class="section-index">
+                    <span>06</span> — EXPERIENCE
+                </div>
+
+                <h2 class="section-title">
+                    Where I've<br>
+                    <em>worked.</em>
+                </h2>
+
+            </div>
+
+            <p class="section-copy">
+                A compact timeline of research, startup incubation, and
+                engineering experience.
+            </p>
+
+        </div>
+
+
+        <div class="timeline">
+
+
+            <div class="timeline-item reveal">
+
+                <div class="timeline-date">
+                    2026 — PRESENT
+                </div>
+
+                <div class="timeline-dot"></div>
+
+                <div class="timeline-card">
+
+                    <h3>
+                        EdgeDaemon
+                    </h3>
+
+                    <div class="timeline-role">
+                        FOUNDER · RESEARCH / PRODUCT LEAD
+                    </div>
+
+                    <p>
+                        Building the venture around AI provenance, internal
+                        assurance, and the MechGuard research program spanning
+                        training-time and deployment-time model evidence.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="timeline-item reveal">
+
+                <div class="timeline-date">
+                    AUG 2026
+                </div>
+
+                <div class="timeline-dot"></div>
+
+                <div class="timeline-card">
+
+                    <h3>
+                        Single Core Labs
+                    </h3>
+
+                    <div class="timeline-role">
+                        UNDERGRADUATE RESEARCH FELLOW
+                    </div>
+
+                    <p>
+                        Research work involving reinforcement learning,
+                        CUDA-based acceleration, reproducible evaluation,
+                        benchmarking pipelines, and AI coding-agent systems.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="timeline-item reveal">
+
+                <div class="timeline-date">
+                    MAY — JUL 2026
+                </div>
+
+                <div class="timeline-dot"></div>
+
+                <div class="timeline-card">
+
+                    <h3>
+                        PESU Venture Labs
+                    </h3>
+
+                    <div class="timeline-role">
+                        TECHNOLOGY ASSOCIATE · ABC FOUNDER TRACK
+                    </div>
+
+                    <p>
+                        Selected for the founder-track incubation programme
+                        to develop EdgeDaemon, working across technical
+                        architecture, product thesis, full-stack prototyping,
+                        pitch development, and go-to-market research.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     SKILLS
+======================================================= -->
 
 <section id="skills">
-  <div class="section-tag" data-n="6">skills</div>
-  <h2 class="section-title">Tech <span class="hi">Stack</span></h2>
-  <div class="skills-container">
-    <div class="skill-group reveal">
-      <div class="skill-group-label">AI / Safety Research</div>
-      <div class="skill-items">
-        <span class="skill-pill">LangGraph</span><span class="skill-pill">LangChain</span><span class="skill-pill">Claude API</span>
-        <span class="skill-pill">OpenAI API</span><span class="skill-pill">RAG</span><span class="skill-pill">Agentic AI</span>
-        <span class="skill-pill">LoRA/QLoRA</span><span class="skill-pill">DPO</span><span class="skill-pill">Continual Learning</span>
-        <span class="skill-pill">Audit Trail Design</span><span class="skill-pill">Mech. Interp. (foundational)</span>
-      </div>
+
+    <div class="container">
+
+        <div class="section-head">
+
+            <div>
+
+                <div class="section-index">
+                    <span>07</span> — CAPABILITIES
+                </div>
+
+                <h2 class="section-title">
+                    My technical<br>
+                    <em>toolbox.</em>
+                </h2>
+
+            </div>
+
+            <p class="section-copy">
+                Technologies I use across research, product engineering,
+                machine learning, backend systems, and agentic AI.
+            </p>
+
+        </div>
+
+
+        <div class="skills-layout">
+
+
+            <div class="skill-group reveal">
+
+                <div class="skill-title">
+                    Programming
+                </div>
+
+                <div class="skill-list">
+
+                    <span class="skill">Python</span>
+                    <span class="skill">C</span>
+                    <span class="skill">C++</span>
+                    <span class="skill">JavaScript</span>
+                    <span class="skill">TypeScript</span>
+                    <span class="skill">SQL</span>
+                    <span class="skill">OOP</span>
+
+                </div>
+
+            </div>
+
+
+            <div class="skill-group reveal">
+
+                <div class="skill-title">
+                    Machine Learning & AI
+                </div>
+
+                <div class="skill-list">
+
+                    <span class="skill">PyTorch</span>
+                    <span class="skill">scikit-learn</span>
+                    <span class="skill">XGBoost</span>
+                    <span class="skill">Hugging Face Transformers</span>
+                    <span class="skill">Deep Learning</span>
+                    <span class="skill">Reinforcement Learning</span>
+                    <span class="skill">Q-Learning</span>
+                    <span class="skill">LSTM</span>
+
+                </div>
+
+            </div>
+
+
+            <div class="skill-group reveal">
+
+                <div class="skill-title">
+                    Generative AI & Agents
+                </div>
+
+                <div class="skill-list">
+
+                    <span class="skill">LLMs</span>
+                    <span class="skill">Agentic AI</span>
+                    <span class="skill">RAG</span>
+                    <span class="skill">LangGraph</span>
+                    <span class="skill">LangChain</span>
+                    <span class="skill">Multi-Agent Systems</span>
+                    <span class="skill">Prompt Engineering</span>
+
+                </div>
+
+            </div>
+
+
+            <div class="skill-group reveal">
+
+                <div class="skill-title">
+                    Data Science
+                </div>
+
+                <div class="skill-list">
+
+                    <span class="skill">Pandas</span>
+                    <span class="skill">NumPy</span>
+                    <span class="skill">Matplotlib</span>
+                    <span class="skill">Feature Engineering</span>
+                    <span class="skill">Data Visualization</span>
+
+                </div>
+
+            </div>
+
+
+            <div class="skill-group reveal">
+
+                <div class="skill-title">
+                    Backend & DevOps
+                </div>
+
+                <div class="skill-list">
+
+                    <span class="skill">FastAPI</span>
+                    <span class="skill">REST APIs</span>
+                    <span class="skill">Docker</span>
+                    <span class="skill">Git</span>
+                    <span class="skill">GitHub</span>
+                    <span class="skill">GitLab CI/CD</span>
+                    <span class="skill">Linux</span>
+
+                </div>
+
+            </div>
+
+
+            <div class="skill-group reveal">
+
+                <div class="skill-title">
+                    Databases & Cloud
+                </div>
+
+                <div class="skill-list">
+
+                    <span class="skill">SQLite</span>
+                    <span class="skill">MySQL</span>
+                    <span class="skill">PostgreSQL</span>
+                    <span class="skill">Google Cloud</span>
+                    <span class="skill">Microsoft Azure</span>
+
+                </div>
+
+            </div>
+
+
+            <div class="skill-group reveal">
+
+                <div class="skill-title">
+                    Other
+                </div>
+
+                <div class="skill-list">
+
+                    <span class="skill">React</span>
+                    <span class="skill">Next.js</span>
+                    <span class="skill">Node.js</span>
+                    <span class="skill">Express.js</span>
+                    <span class="skill">Streamlit</span>
+                    <span class="skill">MQTT</span>
+                    <span class="skill">OpenEnv</span>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
     </div>
-    <div class="skill-group reveal">
-      <div class="skill-group-label">ML / Modeling</div>
-      <div class="skill-items">
-        <span class="skill-pill">PyTorch</span><span class="skill-pill">XGBoost</span><span class="skill-pill">LSTM</span>
-        <span class="skill-pill">Q-Learning</span><span class="skill-pill">ResNet18</span><span class="skill-pill">SHAP</span>
-      </div>
-    </div>
-    <div class="skill-group reveal">
-      <div class="skill-group-label">Languages</div>
-      <div class="skill-items">
-        <span class="skill-pill">Python</span><span class="skill-pill">TypeScript</span><span class="skill-pill">JavaScript</span>
-        <span class="skill-pill">C++</span><span class="skill-pill">C</span><span class="skill-pill">Java</span><span class="skill-pill">SQL</span>
-      </div>
-    </div>
-    <div class="skill-group reveal">
-      <div class="skill-group-label">Full-Stack & Infra</div>
-      <div class="skill-items">
-        <span class="skill-pill">React</span><span class="skill-pill">Next.js</span><span class="skill-pill">FastAPI</span>
-        <span class="skill-pill">Node.js</span><span class="skill-pill">Tailwind</span><span class="skill-pill">Docker</span>
-        <span class="skill-pill">GitLab CI/CD</span><span class="skill-pill">HuggingFace Spaces</span>
-      </div>
-    </div>
-    <div class="skill-group reveal">
-      <div class="skill-group-label">Data Layer</div>
-      <div class="skill-items">
-        <span class="skill-pill">PostgreSQL</span><span class="skill-pill">MongoDB</span><span class="skill-pill">MySQL</span>
-        <span class="skill-pill">Supabase</span><span class="skill-pill">Firebase</span><span class="skill-pill">Redis</span><span class="skill-pill">Kafka</span>
-      </div>
-    </div>
-    <div class="skill-group reveal">
-      <div class="skill-group-label">CS Foundations</div>
-      <div class="skill-items">
-        <span class="skill-pill">DSA (100+ LC)</span><span class="skill-pill">OOP</span><span class="skill-pill">OS</span>
-        <span class="skill-pill">Computer Networks</span><span class="skill-pill">Computer Architecture</span><span class="skill-pill">DBMS</span>
-      </div>
-    </div>
-  </div>
+
 </section>
 
-<section id="certs">
-  <div class="section-tag" data-n="7">credentials</div>
-  <h2 class="section-title">Certifications &amp; <span class="hi">Activities</span></h2>
-  <div class="certs-grid">
-    <div class="cert-card reveal"><div class="cert-icon">⬡</div><div><div class="cert-name">Claude Fluency in AI & Claude 101</div><div class="cert-issuer">ANTHROPIC</div></div></div>
-    <div class="cert-card reveal"><div class="cert-icon">⬡</div><div><div class="cert-name">Forward Learning Programme</div><div class="cert-issuer">MCKINSEY</div></div></div>
-    <div class="cert-card reveal"><div class="cert-icon">⬡</div><div><div class="cert-name">Generative AI & Neural Networks</div><div class="cert-issuer">MICROSOFT AZURE</div></div></div>
-    <div class="cert-card reveal"><div class="cert-icon">⬡</div><div><div class="cert-name">AI/ML Program</div><div class="cert-issuer">IIT PATNA</div></div></div>
-    <div class="cert-card reveal"><div class="cert-icon">⬡</div><div><div class="cert-name">Python (Advanced)</div><div class="cert-issuer">HACKERRANK</div></div></div>
-    <div class="cert-card reveal"><div class="cert-icon">⬡</div><div><div class="cert-name">C Programming</div><div class="cert-issuer">CODECHEF</div></div></div>
-    <div class="cert-card reveal"><div class="cert-icon">⬡</div><div><div class="cert-name">Open Source Contributor</div><div class="cert-issuer">GSSoC · SSoC · HUGGINGFACE</div></div></div>
-    <div class="cert-card reveal"><div class="cert-icon">⬡</div><div><div class="cert-name">National Ice & Inline Hockey Athlete</div><div class="cert-issuer">TEAM KARNATAKA</div></div></div>
-  </div>
+
+<!-- ======================================================
+     CREDENTIALS
+======================================================= -->
+
+<section>
+
+    <div class="container">
+
+        <div class="section-head">
+
+            <div>
+
+                <div class="section-index">
+                    <span>08</span> — CREDENTIALS
+                </div>
+
+                <h2 class="section-title">
+                    Beyond the<br>
+                    <em>projects.</em>
+                </h2>
+
+            </div>
+
+            <p class="section-copy">
+                Programs, certifications, communities, and activities that
+                have shaped the work outside the codebase.
+            </p>
+
+        </div>
+
+
+        <div class="credentials-grid">
+
+
+            <div class="credential reveal">
+
+                <div class="credential-mark">
+                    AN
+                </div>
+
+                <h4>
+                    Claude Fluency in AI & Claude 101
+                </h4>
+
+                <p>
+                    ANTHROPIC
+                </p>
+
+            </div>
+
+
+            <div class="credential reveal">
+
+                <div class="credential-mark">
+                    MS
+                </div>
+
+                <h4>
+                    Generative AI & Neural Networks
+                </h4>
+
+                <p>
+                    MICROSOFT AZURE
+                </p>
+
+            </div>
+
+
+            <div class="credential reveal">
+
+                <div class="credential-mark">
+                    GC
+                </div>
+
+                <h4>
+                    Cloud & ML Credentials
+                </h4>
+
+                <p>
+                    GOOGLE CLOUD
+                </p>
+
+            </div>
+
+
+            <div class="credential reveal">
+
+                <div class="credential-mark">
+                    IIT
+                </div>
+
+                <h4>
+                    Artificial Intelligence & Machine Learning
+                </h4>
+
+                <p>
+                    IIT PATNA
+                </p>
+
+            </div>
+
+
+            <div class="credential reveal">
+
+                <div class="credential-mark">
+                    HR
+                </div>
+
+                <h4>
+                    Python Advanced
+                </h4>
+
+                <p>
+                    HACKERRANK
+                </p>
+
+            </div>
+
+
+            <div class="credential reveal">
+
+                <div class="credential-mark">
+                    CC
+                </div>
+
+                <h4>
+                    C
+                </h4>
+
+                <p>
+                    CODECHEF
+                </p>
+
+            </div>
+
+
+            <div class="credential reveal">
+
+                <div class="credential-mark">
+                    MK
+                </div>
+
+                <h4>
+                    Forward Learning Programme
+                </h4>
+
+                <p>
+                    MCKINSEY
+                </p>
+
+            </div>
+
+
+            <div class="credential reveal">
+
+                <div class="credential-mark">
+                    AD
+                </div>
+
+                <h4>
+                    University Hackathon
+                </h4>
+
+                <p>
+                    ADOBE
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
 </section>
 
-<section id="contact">
-  <div class="contact-inner">
-    <div class="section-tag" data-n="8">contact</div>
-    <h2 class="section-title">Let's <span class="hi">Build</span></h2>
-    <p>Looking for AI engineering / AI safety / full-stack internships at teams building serious things. If you're working on something that needs to be provably correct — I'd love to talk.</p>
-    <a href="mailto:yxshas565@gmail.com" class="contact-email">yxshas565@gmail.com</a>
-    <div class="contact-links">
-      <a href="https://github.com/yxshas565" target="_blank" class="contact-link">GitHub ↗</a>
-      <a href="https://www.linkedin.com/feed/" target="_blank" class="contact-link">LinkedIn ↗</a>
-      <a href="Yashas_Sadananda_Resume_SWE_Intern-1%20(1).pdf" target="_blank" class="contact-link">Resume ↓</a>
-      <a href="mailto:yxshas565@gmail.com" class="contact-link">Email ✉</a>
+
+<!-- ======================================================
+     ACTIVITIES
+======================================================= -->
+
+<section>
+
+    <div class="container">
+
+        <div class="section-head">
+
+            <div>
+
+                <div class="section-index">
+                    <span>09</span> — COMMUNITY
+                </div>
+
+                <h2 class="section-title">
+                    Outside the<br>
+                    <em>repository.</em>
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <div class="activity-grid">
+
+
+            <div class="activity reveal">
+
+                <div class="activity-icon">
+                    OS
+                </div>
+
+                <div>
+
+                    <h4>
+                        Open Source
+                    </h4>
+
+                    <p>
+                        Contributor across GSSoC, SSoC, and Hugging Face
+                        ecosystem projects.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="activity reveal">
+
+                <div class="activity-icon">
+                    GA
+                </div>
+
+                <div>
+
+                    <h4>
+                        Google Student Ambassador
+                    </h4>
+
+                    <p>
+                        Participant in the Gemini Student Ambassador
+                        programme.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="activity reveal">
+
+                <div class="activity-icon">
+                    IEEE
+                </div>
+
+                <div>
+
+                    <h4>
+                        IEEE RAS PESUCC Robotics Club
+                    </h4>
+
+                    <p>
+                        Technical domain involvement across robotics and
+                        engineering activities.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="activity reveal">
+
+                <div class="activity-icon">
+                    IT
+                </div>
+
+                <div>
+
+                    <h4>
+                        IEEE EC Campus
+                    </h4>
+
+                    <p>
+                        Technical-domain participation and engineering
+                        community activities.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="activity reveal">
+
+                <div class="activity-icon">
+                    KK
+                </div>
+
+                <div>
+
+                    <h4>
+                        Kannada Koota
+                    </h4>
+
+                    <p>
+                        IT / technical-domain involvement within the campus
+                        community.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="activity reveal">
+
+                <div class="activity-icon">
+                    HK
+                </div>
+
+                <div>
+
+                    <h4>
+                        Ice & Inline Hockey
+                    </h4>
+
+                    <p>
+                        Competitive hockey experience representing Karnataka,
+                        bringing a team-performance perspective outside
+                        engineering.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
     </div>
-  </div>
+
 </section>
+
+
+<!-- ======================================================
+     PROJECT ARCHIVE
+======================================================= -->
+
+<section>
+
+    <div class="container">
+
+        <div class="section-head">
+
+            <div>
+
+                <div class="section-index">
+                    <span>10</span> — ARCHIVE
+                </div>
+
+                <h2 class="section-title">
+                    The rest of<br>
+                    the <em>lab.</em>
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <p class="archive-intro">
+            Not every experiment belongs on the front page. This is the
+            deeper repository layer — coursework, infrastructure experiments,
+            frontend builds, research prototypes, and older systems.
+        </p>
+
+
+        <div class="archive-grid">
+
+
+            <a
+                class="archive-link"
+                href="https://github.com/yxshas565/MAST-map-quality-ai"
+                target="_blank"
+                rel="noopener"
+            >
+                MAST Map Quality AI
+                <span class="archive-arrow">↗</span>
+            </a>
+
+
+            <a
+                class="archive-link"
+                href="https://github.com/yxshas565/AI-Geometry-QA-system"
+                target="_blank"
+                rel="noopener"
+            >
+                AI Geometry QA
+                <span class="archive-arrow">↗</span>
+            </a>
+
+
+            <a
+                class="archive-link"
+                href="https://github.com/yxshas565/FAANG-mission-control"
+                target="_blank"
+                rel="noopener"
+            >
+                FAANG Mission Control
+                <span class="archive-arrow">↗</span>
+            </a>
+
+
+            <a
+                class="archive-link"
+                href="https://github.com/yxshas565/Secure-Digital-Vault"
+                target="_blank"
+                rel="noopener"
+            >
+                Secure Digital Vault
+                <span class="archive-arrow">↗</span>
+            </a>
+
+
+            <a
+                class="archive-link"
+                href="https://github.com/yxshas565/Youtube-Clown"
+                target="_blank"
+                rel="noopener"
+            >
+                YouTube Clown
+                <span class="archive-arrow">↗</span>
+            </a>
+
+
+            <a
+                class="archive-link"
+                href="https://github.com/yxshas565/E-commerce-Website"
+                target="_blank"
+                rel="noopener"
+            >
+                E-Commerce Website
+                <span class="archive-arrow">↗</span>
+            </a>
+
+
+            <a
+                class="archive-link"
+                href="https://github.com/yxshas565/web-server-fingerprinting-tool"
+                target="_blank"
+                rel="noopener"
+            >
+                Web Server Fingerprinting Tool
+                <span class="archive-arrow">↗</span>
+            </a>
+
+
+            <a
+                class="archive-link"
+                href="https://github.com/yxshas565/Canteen-queue-management-system"
+                target="_blank"
+                rel="noopener"
+            >
+                Canteen Queue Management
+                <span class="archive-arrow">↗</span>
+            </a>
+
+
+            <a
+                class="archive-link"
+                href="https://github.com/yxshas565/SDN-Mininet-Project-Traffic-Classification-System"
+                target="_blank"
+                rel="noopener"
+            >
+                SDN Traffic Classification
+                <span class="archive-arrow">↗</span>
+            </a>
+
+
+            <a
+                class="archive-link"
+                href="https://github.com/yxshas565/supplysense-orchestrator"
+                target="_blank"
+                rel="noopener"
+            >
+                SupplySense Orchestrator
+                <span class="archive-arrow">↗</span>
+            </a>
+
+
+            <a
+                class="archive-link"
+                href="https://github.com/yxshas565/ship-and-learn"
+                target="_blank"
+                rel="noopener"
+            >
+                Ship & Learn
+                <span class="archive-arrow">↗</span>
+            </a>
+
+
+            <a
+                class="archive-link"
+                href="https://github.com/yxshas565/recovery-graph"
+                target="_blank"
+                rel="noopener"
+            >
+                Recovery Graph
+                <span class="archive-arrow">↗</span>
+            </a>
+
+
+            <a
+                class="archive-link"
+                href="https://github.com/yxshas565/AssetFlow-YashasSadananda-EdgeDaemon"
+                target="_blank"
+                rel="noopener"
+            >
+                AssetFlow / EdgeDaemon
+                <span class="archive-arrow">↗</span>
+            </a>
+
+
+            <a
+                class="archive-link"
+                href="https://github.com/yxshas565/Edge-Daemon"
+                target="_blank"
+                rel="noopener"
+            >
+                Edge-Daemon
+                <span class="archive-arrow">↗</span>
+            </a>
+
+
+            <a
+                class="archive-link"
+                href="https://github.com/yxshas565/artistry-landing-page"
+                target="_blank"
+                rel="noopener"
+            >
+                Artistry Landing Page
+                <span class="archive-arrow">↗</span>
+            </a>
+
+
+            <a
+                class="archive-link"
+                href="https://github.com/yxshas565/coffee-landing-page"
+                target="_blank"
+                rel="noopener"
+            >
+                Coffee Landing Page
+                <span class="archive-arrow">↗</span>
+            </a>
+
+
+            <a
+                class="archive-link"
+                href="https://github.com/yxshas565/CS-Fundamentals--Placement--Prep"
+                target="_blank"
+                rel="noopener"
+            >
+                CS Fundamentals / Placement Prep
+                <span class="archive-arrow">↗</span>
+            </a>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     NEW — RESUME
+======================================================= -->
+
+<section id="resume" class="resume-section">
+
+    <div class="container">
+
+        <div class="resume-shell reveal">
+
+            <div class="resume-layout">
+
+                <div>
+
+                    <div class="resume-kicker">
+                        11 / RESUME
+                    </div>
+
+                    <h2 class="resume-title">
+                        The concise<br>
+                        <span>version.</span>
+                    </h2>
+
+                    <p class="resume-copy">
+                        A one-page overview of my education, experience,
+                        selected projects, technical stack, research,
+                        and engineering work.
+                    </p>
+
+                    <div class="resume-meta">
+
+                        <span>AI / ML</span>
+                        <span>SOFTWARE ENGINEERING</span>
+                        <span>AGENTIC AI</span>
+                        <span>AI SAFETY</span>
+                        <span>RESEARCH</span>
+
+                    </div>
+
+                </div>
+
+
+                <div>
+
+                    <div class="resume-actions">
+
+                        <a
+                            href="/Yashas_Sadananda_Resume.pdf"
+                            target="_blank"
+                            class="btn btn-primary"
+                        >
+                            View Resume ↗
+                        </a>
+
+                        <a
+                            href="/Yashas_Sadananda_Resume.pdf"
+                            download
+                            class="btn btn-secondary"
+                        >
+                            Download PDF ↓
+                        </a>
+
+                    </div>
+
+                    <div class="resume-file">
+                        /Yashas_Sadananda_Resume.pdf
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     CONTACT
+======================================================= -->
+
+<section id="contact" class="contact">
+
+    <div class="container">
+
+        <div class="contact-shell reveal">
+
+            <div class="contact-content">
+
+                <div class="contact-kicker">
+                    HAVE SOMETHING INTERESTING?
+                </div>
+
+                <h2 class="contact-title">
+                    Let's build<br>
+                    something <span>serious.</span>
+                </h2>
+
+                <p class="contact-copy">
+                    I'm interested in internships, research opportunities,
+                    ambitious engineering teams, and people building
+                    technically difficult things in AI, ML, systems,
+                    or software.
+                </p>
+
+
+                <div class="contact-actions">
+
+                    <a
+                        href="mailto:yxshas565@gmail.com"
+                        class="btn btn-primary"
+                    >
+                        yxshas565@gmail.com
+                    </a>
+
+                    <a
+                        href="https://www.linkedin.com/in/yashas-sadananda-37a516358/"
+                        target="_blank"
+                        rel="noopener"
+                        class="btn btn-secondary"
+                    >
+                        LinkedIn ↗
+                    </a>
+
+                    <a
+                        href="https://github.com/yxshas565"
+                        target="_blank"
+                        rel="noopener"
+                        class="btn btn-secondary"
+                    >
+                        GitHub ↗
+                    </a>
+
+                    <a
+                        href="https://leetcode.com/u/yxshas565/"
+                        target="_blank"
+                        rel="noopener"
+                        class="btn btn-secondary"
+                    >
+                        LeetCode ↗
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+<!-- ======================================================
+     FOOTER
+======================================================= -->
 
 <footer>
-  <p>© 2026 YASHAS SADANANDA · BUILT FROM SCRATCH</p>
-  <div class="footer-right">Bengaluru, India · B.Tech CSE · PES University</div>
+
+    <div class="footer-inner">
+
+        <div class="footer-left">
+            © 2026 YASHAS SADANANDA
+        </div>
+
+        <div class="footer-right">
+
+            <a href="mailto:yxshas565@gmail.com">
+                EMAIL
+            </a>
+
+            <a
+                href="https://github.com/yxshas565"
+                target="_blank"
+                rel="noopener"
+            >
+                GITHUB
+            </a>
+
+            <a
+                href="https://www.linkedin.com/in/yashas-sadananda-37a516358/"
+                target="_blank"
+                rel="noopener"
+            >
+                LINKEDIN
+            </a>
+
+            <a
+                href="https://leetcode.com/u/yxshas565/"
+                target="_blank"
+                rel="noopener"
+            >
+                LEETCODE
+            </a>
+
+        </div>
+
+    </div>
+
 </footer>
 
+
+<!-- ======================================================
+     COMMAND PALETTE
+======================================================= -->
+
+<div class="command" id="command">
+
+    <div class="command-box">
+
+        <input
+            id="commandInput"
+            class="command-input"
+            placeholder="Type a command..."
+            autocomplete="off"
+        >
+
+        <div class="command-items">
+
+            <button
+                class="command-item"
+                data-target="#about"
+            >
+                <span>Go to About</span>
+                <span class="command-key">01</span>
+            </button>
+
+            <button
+                class="command-item"
+                data-target="#edge-daemon"
+            >
+                <span>Open EdgeDaemon</span>
+                <span class="command-key">02</span>
+            </button>
+
+            <button
+                class="command-item"
+                data-target="#projects"
+            >
+                <span>Browse Projects</span>
+                <span class="command-key">03</span>
+            </button>
+
+            <!-- NEW -->
+            <button
+                class="command-item"
+                data-target="#live"
+            >
+                <span>Open Live Systems</span>
+                <span class="command-key">04</span>
+            </button>
+
+            <button
+                class="command-item"
+                data-target="#research"
+            >
+                <span>Open Research</span>
+                <span class="command-key">05</span>
+            </button>
+
+            <button
+                class="command-item"
+                data-target="#experience"
+            >
+                <span>Open Experience</span>
+                <span class="command-key">06</span>
+            </button>
+
+            <!-- NEW -->
+            <button
+                class="command-item"
+                data-target="#resume"
+            >
+                <span>Open Resume</span>
+                <span class="command-key">07</span>
+            </button>
+
+            <button
+                class="command-item"
+                data-target="#contact"
+            >
+                <span>Contact</span>
+                <span class="command-key">08</span>
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
 <script>
-window.addEventListener('scroll',()=>{
-  document.getElementById('nav').classList.toggle('scrolled', window.scrollY>10);
+
+/* =========================================================
+   NAV SCROLL
+========================================================= */
+
+const nav = document.getElementById("nav");
+
+window.addEventListener("scroll",()=>{
+
+    nav.classList.toggle(
+        "scrolled",
+        window.scrollY > 20
+    );
+
 });
-const obs=new IntersectionObserver(entries=>{
-  entries.forEach((e,i)=>{ if(e.isIntersecting){ setTimeout(()=>e.target.classList.add('visible'),i*60); } });
-},{threshold:.1});
-document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+
+/* =========================================================
+   SCROLL PROGRESS
+========================================================= */
+
+const progress = document.getElementById("progress");
+
+window.addEventListener("scroll",()=>{
+
+    const scrollTop =
+        window.scrollY;
+
+    const height =
+        document.documentElement.scrollHeight
+        - window.innerHeight;
+
+    const percentage =
+        height > 0
+        ? (scrollTop / height) * 100
+        : 0;
+
+    progress.style.width =
+        percentage + "%";
+
+});
+
+
+/* =========================================================
+   CURSOR GLOW
+========================================================= */
+
+const cursorGlow =
+    document.getElementById("cursorGlow");
+
+if(
+    window.matchMedia("(pointer:fine)").matches
+){
+
+    window.addEventListener("mousemove",(event)=>{
+
+        cursorGlow.style.left =
+            event.clientX + "px";
+
+        cursorGlow.style.top =
+            event.clientY + "px";
+
+    });
+
+}
+
+
+/* =========================================================
+   REVEAL ON SCROLL
+========================================================= */
+
+const observer =
+    new IntersectionObserver(
+        entries => {
+
+            entries.forEach(entry=>{
+
+                if(entry.isIntersecting){
+
+                    entry.target.classList.add(
+                        "visible"
+                    );
+
+                    observer.unobserve(
+                        entry.target
+                    );
+
+                }
+
+            });
+
+        },
+        {
+            threshold:.12
+        }
+    );
+
+document
+    .querySelectorAll(".reveal")
+    .forEach(element=>{
+        observer.observe(element);
+    });
+
+
+/* =========================================================
+   PROJECT FILTERS
+========================================================= */
+
+const filters =
+    document.querySelectorAll(".filter");
+
+const projects =
+    document.querySelectorAll(".project");
+
+const projectCount =
+    document.getElementById("projectCount");
+
+
+filters.forEach(filter=>{
+
+    filter.addEventListener("click",()=>{
+
+        filters.forEach(button=>{
+            button.classList.remove("active");
+        });
+
+        filter.classList.add("active");
+
+        const selected =
+            filter.dataset.filter;
+
+        let visible = 0;
+
+        projects.forEach(project=>{
+
+            const categories =
+                project.dataset.category
+                    .split(" ");
+
+            const show =
+                selected === "all"
+                || categories.includes(selected);
+
+            if(show){
+
+                project.classList.remove(
+                    "hidden"
+                );
+
+                visible++;
+
+            }else{
+
+                project.classList.add(
+                    "hidden"
+                );
+
+            }
+
+        });
+
+        projectCount.textContent =
+            `SHOWING ${visible} PROJECT${visible === 1 ? "" : "S"}`;
+
+    });
+
+});
+
+
+/* =========================================================
+   MOBILE MENU
+========================================================= */
+
+const mobileToggle =
+    document.getElementById("mobileToggle");
+
+mobileToggle.addEventListener("click",()=>{
+
+    nav.classList.toggle("mobile-open");
+
+});
+
+
+document
+    .querySelectorAll(".nav-links a")
+    .forEach(link=>{
+
+        link.addEventListener("click",()=>{
+
+            nav.classList.remove(
+                "mobile-open"
+            );
+
+        });
+
+    });
+
+
+/* =========================================================
+   COMMAND PALETTE
+========================================================= */
+
+const command =
+    document.getElementById("command");
+
+const commandInput =
+    document.getElementById("commandInput");
+
+
+function openCommand(){
+
+    command.classList.add("open");
+
+    setTimeout(()=>{
+        commandInput.focus();
+    },50);
+
+}
+
+
+function closeCommand(){
+
+    command.classList.remove(
+        "open"
+    );
+
+    commandInput.value = "";
+
+}
+
+
+document.addEventListener("keydown",(event)=>{
+
+    const commandKey =
+        event.ctrlKey || event.metaKey;
+
+    if(
+        commandKey
+        && event.key.toLowerCase() === "k"
+    ){
+
+        event.preventDefault();
+
+        if(
+            command.classList.contains("open")
+        ){
+            closeCommand();
+        }else{
+            openCommand();
+        }
+
+    }
+
+
+    if(event.key === "Escape"){
+
+        closeCommand();
+
+    }
+
+});
+
+
+command.addEventListener("click",(event)=>{
+
+    if(event.target === command){
+
+        closeCommand();
+
+    }
+
+});
+
+
+document
+    .querySelectorAll(".command-item")
+    .forEach(item=>{
+
+        item.addEventListener("click",()=>{
+
+            const target =
+                document.querySelector(
+                    item.dataset.target
+                );
+
+            closeCommand();
+
+            if(target){
+
+                target.scrollIntoView({
+                    behavior:"smooth"
+                });
+
+            }
+
+        });
+
+    });
+
+
+/* =========================================================
+   COMMAND SEARCH
+========================================================= */
+
+commandInput.addEventListener(
+    "input",
+    ()=>{
+
+        const query =
+            commandInput.value
+                .toLowerCase()
+                .trim();
+
+        document
+            .querySelectorAll(".command-item")
+            .forEach(item=>{
+
+                const text =
+                    item.textContent
+                        .toLowerCase();
+
+                item.style.display =
+                    !query
+                    || text.includes(query)
+                    ? "flex"
+                    : "none";
+
+            });
+
+    }
+);
+
+
+/* =========================================================
+   MAGNETIC BUTTON MICRO-INTERACTION
+========================================================= */
+
+if(
+    window.matchMedia("(pointer:fine)").matches
+){
+
+    document
+        .querySelectorAll(".btn")
+        .forEach(button=>{
+
+            button.addEventListener(
+                "mousemove",
+                event=>{
+
+                    const rect =
+                        button.getBoundingClientRect();
+
+                    const x =
+                        event.clientX
+                        - rect.left
+                        - rect.width / 2;
+
+                    const y =
+                        event.clientY
+                        - rect.top
+                        - rect.height / 2;
+
+                    button.style.transform =
+                        `translate(${x*.04}px,${y*.04}px)`;
+
+                }
+            );
+
+
+            button.addEventListener(
+                "mouseleave",
+                ()=>{
+
+                    button.style.transform =
+                        "";
+
+                }
+            );
+
+        });
+
+}
+
+
+/* =========================================================
+   ACTIVE SECTION NAV
+========================================================= */
+
+const sections =
+    document.querySelectorAll(
+        "main section[id]"
+    );
+
+const navAnchors =
+    document.querySelectorAll(
+        ".nav-links a"
+    );
+
+
+const sectionObserver =
+    new IntersectionObserver(
+        entries=>{
+
+            entries.forEach(entry=>{
+
+                if(entry.isIntersecting){
+
+                    const id =
+                        entry.target.id;
+
+                    navAnchors.forEach(anchor=>{
+
+                        const href =
+                            anchor.getAttribute(
+                                "href"
+                            );
+
+                        anchor.style.color =
+                            href === "#" + id
+                            ? "var(--white)"
+                            : "";
+
+                    });
+
+                }
+
+            });
+
+        },
+        {
+            rootMargin:"-35% 0px -55% 0px"
+        }
+    );
+
+
+sections.forEach(section=>{
+    sectionObserver.observe(section);
+});
+
+
+/* =========================================================
+   HERO TILT
+========================================================= */
+
+const systemCard =
+    document.querySelector(".system-card");
+
+
+if(
+    systemCard
+    && window.matchMedia("(pointer:fine)").matches
+){
+
+    systemCard.addEventListener(
+        "mousemove",
+        event=>{
+
+            const rect =
+                systemCard.getBoundingClientRect();
+
+            const x =
+                (event.clientX - rect.left)
+                / rect.width;
+
+            const y =
+                (event.clientY - rect.top)
+                / rect.height;
+
+            const rotateY =
+                (x - .5) * 5;
+
+            const rotateX =
+                (y - .5) * -5;
+
+            systemCard.style.transform =
+                `perspective(1000px)
+                 rotateX(${rotateX}deg)
+                 rotateY(${rotateY}deg)
+                 translateY(-2px)`;
+
+        }
+    );
+
+
+    systemCard.addEventListener(
+        "mouseleave",
+        ()=>{
+
+            systemCard.style.transform =
+                "";
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   LIVE CARD MICRO TILT
+========================================================= */
+
+if(
+    window.matchMedia("(pointer:fine)").matches
+){
+
+    document
+        .querySelectorAll(".live-card")
+        .forEach(card=>{
+
+            card.addEventListener(
+                "mousemove",
+                event=>{
+
+                    const rect =
+                        card.getBoundingClientRect();
+
+                    const x =
+                        (event.clientX - rect.left)
+                        / rect.width;
+
+                    const y =
+                        (event.clientY - rect.top)
+                        / rect.height;
+
+                    const rotateY =
+                        (x - .5) * 2.5;
+
+                    const rotateX =
+                        (y - .5) * -2.5;
+
+                    card.style.transform =
+                        `perspective(900px)
+                         rotateX(${rotateX}deg)
+                         rotateY(${rotateY}deg)
+                         translateY(-3px)`;
+
+                }
+            );
+
+            card.addEventListener(
+                "mouseleave",
+                ()=>{
+
+                    card.style.transform =
+                        "";
+
+                }
+            );
+
+        });
+
+}
+
+
+/* =========================================================
+   CONSOLE EASTER EGG
+========================================================= */
+
+console.log(
+`
+%cYASHAS.DEV
+%c
+Building intelligent systems.
+AI / ML · Systems · Agents · Research
+
+GitHub:
+https://github.com/yxshas565
+
+LeetCode:
+https://leetcode.com/u/yxshas565/
+
+Live:
+Weather Risk Forecasting
+https://weather-risk-app-tau.vercel.app/
+
+Coffee:
+https://yxshas565.github.io/coffee-landing-page/
+
+Artistry:
+https://yxshas565.github.io/artistry-landing-page/
+
+Try Ctrl/Cmd + K.
+`,
+"font-size:20px;font-weight:bold;color:#62e6ff;",
+"font-size:12px;color:#8391a3;"
+);
+
 </script>
+
 </body>
 </html>
