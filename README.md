@@ -1,6 +1,6 @@
 # Yashas Sadananda — Portfolio
 
-[![Live Portfolio](https://img.shields.io/badge/Live%20Portfolio-yxshas565.github.io-62e6ff?style=flat-square)](https://yxshas565.github.io/yashas-portfolio/)
+[![Live Portfolio](https://img.shields.io/badge/Live%20Portfolio-yxshas565.github.io-62e6ff?style=flat-square)](https://yxshas565.github.io/yashas-portfolio/?v=20260905)
 [![GitHub](https://img.shields.io/badge/GitHub-yxshas565-111827?style=flat-square&logo=github)](https://github.com/yxshas565)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Yashas%20Sadananda-0A66C2?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/yashas-sadananda-37a516358/)
 
@@ -8,7 +8,7 @@ Personal portfolio of **Yashas Sadananda**, a Computer Science undergraduate at 
 
 ## Live Site
 
-**[yxshas565.github.io/yashas-portfolio](https://yxshas565.github.io/yashas-portfolio/)**
+**[yxshas565.github.io/yashas-portfolio](https://yxshas565.github.io/yashas-portfolio/?v=20260905)**
 
 The portfolio presents my engineering work, research direction, projects, experience, skills, credentials, and community involvement.
 
